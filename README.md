@@ -14,8 +14,9 @@ This repository is a **spec and decision log**, not an implementation of agents,
 ## Start here
 
 1. [GitHub-Centered Agentic IT Control Plane](docs/architecture/github-agentic-it-control-plane.md) — full architecture
-2. [ADR 001 — GitHub as control plane](docs/decisions/001-github-as-control-plane.md)
-3. [ADR 002 — Agent / skill / workflow split](docs/decisions/002-agent-skill-workflow-split.md)
+2. [IT Cloud Team — Agentic AI roadmap](docs/roadmaps/it-cloud-team-ai-roadmap.md) — Agentic Enterprise 2028 applied (18-month autonomy ladder)
+3. [ADR 001 — GitHub as control plane](docs/decisions/001-github-as-control-plane.md)
+4. [ADR 002 — Agent / skill / workflow split](docs/decisions/002-agent-skill-workflow-split.md)
 
 ## How to review
 

@@ -69,6 +69,8 @@ Run long-running agents, sensitive integrations, and production mutations in the
 
 ## 3. Control-plane architecture and trust boundaries
 
+Editorial diagram: [github-agentic-it-control-plane.html](./github-agentic-it-control-plane.html) — GitHub governs source and approvals; only GitHub Actions may cross the MCP/API gateway; direct agent-to-system calls stop at the trust boundary.
+
 ```text
 Humans / IT systems
         |

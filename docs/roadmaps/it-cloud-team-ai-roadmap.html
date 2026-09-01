@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>IT Cloud Team — Agentic AI Roadmap</title>
+  <link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300;0,400;0,600;0,700;1,300&family=Geist+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --paper: #ffffff; --paper-2: #e8eae9; --ink: #000000;
+      --muted: #63666a; --soft: #75787b; --rule: rgba(0,0,0,0.12);
+      --accent: #86BC25; --accent-tint: rgba(134,188,37,0.08);
+      --link: #1076A8; --series-2: #1076A8; --series-4: #046A38;
+      --font-sans: 'Open Sans', system-ui, sans-serif;
+      --font-mono: 'Geist Mono', ui-monospace, monospace;
+    }
+    body { font-family: var(--font-sans); background: var(--paper-2); color: var(--ink); line-height: 1.6; }
+    .site-header { background: var(--ink); padding: 1.25rem 2rem; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 1rem; }
+    .site-header .logo { height: 28px; }
+    .site-header .meta { font-family: var(--font-mono); font-size: 0.66rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--soft); }
+    .hero { background: var(--paper); border-bottom: 3px solid var(--accent); padding: 2.5rem 2rem; max-width: 1100px; margin: 0 auto; }
+    .hero .eyebrow { font-family: var(--font-mono); font-size: 0.66rem; letter-spacing: 0.18em; text-transform: uppercase; color: var(--accent); margin-bottom: 0.5rem; }
+    .hero h1 { font-size: clamp(1.5rem, 2.5vw, 2.25rem); font-weight: 300; letter-spacing: -0.02em; margin-bottom: 0.5rem; }
+    .hero .sub { font-weight: 300; color: var(--muted); font-style: italic; margin-bottom: 1rem; }
+    .hero a { color: var(--link); text-decoration: none; font-size: 0.875rem; }
+    .hero a:hover { text-decoration: underline; }
+    .container { max-width: 1100px; margin: 0 auto; padding: 2rem; }
+    section { background: var(--paper); border-radius: 8px; padding: 2rem; margin-bottom: 1.5rem; border: 1px solid var(--rule); }
+    h2 { font-size: 1.25rem; font-weight: 300; margin-bottom: 1rem; padding-bottom: 0.4rem; border-bottom: 2px solid var(--accent); display: inline-block; }
+    h3 { font-size: 0.95rem; font-weight: 600; margin: 1.25rem 0 0.5rem; }
+    p { margin-bottom: 0.85rem; }
+    p.lead { font-size: 1.05rem; font-weight: 300; color: var(--muted); }
+    table { width: 100%; border-collapse: collapse; font-size: 0.85rem; margin: 1rem 0; }
+    th, td { padding: 0.55rem 0.75rem; text-align: left; border-bottom: 1px solid var(--rule); }
+    th { font-family: var(--font-mono); font-size: 0.65rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--soft); background: rgba(0,0,0,0.02); }
+    .chart-wrap { margin: 1.25rem 0; overflow-x: auto; }
+    .chart-caption { font-family: var(--font-mono); font-size: 0.68rem; color: var(--soft); text-align: center; margin-top: 0.4rem; letter-spacing: 0.06em; }
+    .phase-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1rem; margin: 1rem 0; }
+    .phase-card { border-radius: 8px; padding: 1.25rem; border: 1px solid var(--rule); position: relative; }
+    .phase-card.active { background: var(--accent-tint); border-color: var(--accent); }
+    .phase-card .num { font-family: var(--font-mono); font-size: 0.7rem; color: var(--accent); letter-spacing: 0.12em; }
+    .phase-card .level { font-size: 0.75rem; color: var(--series-2); margin-bottom: 0.25rem; }
+    .phase-card h3 { margin: 0.35rem 0 0.25rem; font-size: 1rem; }
+    .phase-card .when { font-size: 0.8rem; color: var(--soft); margin-bottom: 0.5rem; }
+    .phase-card ul { margin: 0 0 0 1rem; font-size: 0.85rem; }
+    .phase-card li { margin-bottom: 0.2rem; }
+    .pillars { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 0.75rem; margin: 1rem 0; }
+    .pillar { padding: 1rem; border-radius: 8px; background: rgba(0,0,0,0.02); border-left: 3px solid var(--accent); font-size: 0.85rem; }
+    .pillar strong { display: block; margin-bottom: 0.2rem; font-size: 0.9rem; }
+    .cta { background: var(--ink); color: var(--paper); border-radius: 8px; padding: 1.25rem 1.5rem; margin-top: 1rem; }
+    .cta h3 { color: var(--accent); font-family: var(--font-mono); font-size: 0.7rem; letter-spacing: 0.14em; text-transform: uppercase; margin: 0 0 0.5rem; }
+    .cta p { margin: 0; font-weight: 300; }
+    footer { max-width: 1100px; margin: 0 auto; padding: 2rem; font-size: 0.8rem; color: var(--soft); text-align: center; }
+    footer a { color: var(--link); }
+  </style>
+</head>
+<body>
+
+<header class="site-header">
+  <img src="../../images/deloitte.svg" alt="Deloitte" class="logo" width="140" height="28">
+  <span class="meta">IT Cloud Team · Agentic AI Roadmap · Sep 2026</span>
+</header>
+
+<div class="hero">
+  <p class="eyebrow">Agentic Enterprise 2028 applied</p>
+  <h1>IT Cloud Team — agentic AI roadmap</h1>
+  <p class="sub">18-month climb from Assist to Optimize on the autonomy ladder</p>
+  <a href="./it-cloud-team-ai-roadmap.md">Markdown edition</a> ·
+  <a href="../reports/agentic-ai-enterprise-2028-summary.html">Agentic Enterprise 2028</a> ·
+  <a href="../architecture/github-agentic-it-control-plane.md">Control plane architecture</a>
+</div>
+
+<div class="container">
+
+  <section>
+    <h2>Executive summary</h2>
+    <p class="lead">Agentic AI is the <strong>operating logic</strong> of tomorrow's cloud platform — not Copilot licenses without production workflows. This roadmap climbs the <strong>autonomy ladder</strong> while evolving six pillars concurrently: strategy, governance, data, platform, workforce, and change management.</p>
+    <p>Humans shift from operators to orchestrators. Every pilot declares its production path, integration pattern (overlay → by-design), and Return-on-Autonomy (RoA) metrics before funding.</p>
+
+    <div class="chart-wrap">
+      <svg viewBox="0 0 900 160" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Autonomy ladder progression for cloud team">
+        <rect width="100%" height="100%" fill="#ffffff"/>
+        <text x="24" y="24" fill="#75787b" font-size="9" font-family="Geist Mono, monospace" letter-spacing="0.12em">AUTONOMY LADDER — 18-MONTH TARGET</text>
+        <g font-family="Open Sans, sans-serif">
+          <rect x="24" y="44" width="120" height="44" rx="6" fill="rgba(134,188,37,0.15)" stroke="#86BC25"/>
+          <text x="84" y="64" text-anchor="middle" font-size="10" font-weight="600">0 Assist</text>
+          <text x="84" y="78" text-anchor="middle" font-size="8" fill="#63666a">Operator</text>
+          <text x="152" y="72" font-size="16" fill="#63666a">→</text>
+          <rect x="168" y="44" width="120" height="44" rx="6" fill="rgba(134,188,37,0.12)" stroke="#86BC25"/>
+          <text x="228" y="64" text-anchor="middle" font-size="10" font-weight="600">1 Suggest</text>
+          <text x="228" y="78" text-anchor="middle" font-size="8" fill="#63666a">Guide</text>
+          <text x="296" y="72" font-size="16" fill="#63666a">→</text>
+          <rect x="312" y="44" width="120" height="44" rx="6" fill="rgba(16,118,168,0.15)" stroke="#1076A8"/>
+          <text x="372" y="64" text-anchor="middle" font-size="10" font-weight="600">2 Execute</text>
+          <text x="372" y="78" text-anchor="middle" font-size="8" fill="#63666a">Monitor</text>
+          <text x="440" y="72" font-size="16" fill="#63666a">→</text>
+          <rect x="456" y="44" width="120" height="44" rx="6" fill="rgba(16,118,168,0.12)" stroke="#1076A8"/>
+          <text x="516" y="64" text-anchor="middle" font-size="10" font-weight="600">3 Orchestrate</text>
+          <text x="516" y="78" text-anchor="middle" font-size="8" fill="#63666a">Supervisor</text>
+          <text x="584" y="72" font-size="16" fill="#63666a">→</text>
+          <rect x="600" y="44" width="120" height="44" rx="6" fill="#000000"/>
+          <text x="660" y="64" text-anchor="middle" font-size="10" font-weight="600" fill="#86BC25">4 Optimize</text>
+          <text x="660" y="78" text-anchor="middle" font-size="8" fill="#d0d0ce">Strategist</text>
+          <text x="736" y="72" font-size="16" fill="#63666a">→</text>
+          <rect x="752" y="44" width="120" height="44" rx="6" fill="rgba(0,0,0,0.04)" stroke="#75787b" stroke-dasharray="4,3"/>
+          <text x="812" y="64" text-anchor="middle" font-size="10" font-weight="600" fill="#63666a">5 Self-evolve</text>
+          <text x="812" y="78" text-anchor="middle" font-size="8" fill="#63666a">Roadmap v2</text>
+        </g>
+        <rect x="24" y="110" width="852" height="36" rx="6" fill="rgba(134,188,37,0.06)" stroke="#86BC25" stroke-width="0.8"/>
+        <text x="450" y="132" text-anchor="middle" font-size="10" font-family="Open Sans, sans-serif" font-style="italic">Six pillars evolve concurrently · Measured via Return-on-Autonomy (RoA) KPIs</text>
+      </svg>
+      <p class="chart-caption">Figure 1 — Autonomy ladder target for the IT Cloud Team (levels 0–4 in 18 months)</p>
+    </div>
+  </section>
+
+  <section>
+    <h2>Blueprint → cloud team response</h2>
+    <table>
+      <thead><tr><th>Agentic Enterprise 2028</th><th>Cloud team response</th></tr></thead>
+      <tbody>
+        <tr><td>Autonomy ladder (Execute 55–65% by 2028)</td><td>Map phases to levels 0→4; target Execute by Phase 3</td></tr>
+        <tr><td>Overlay → as-a-service → by design</td><td>Layered rollout; by-design for change flows in Phase 5</td></tr>
+        <tr><td>Guardian agents + policy-as-code</td><td>Supervisory agents + CI tier rules from Phase 2</td></tr>
+        <tr><td>MCP / A2A / agent-mesh</td><td>Gateway as uniform interface; no direct agent→cloud</td></tr>
+        <tr><td>Convergence data + vector fabric</td><td>Incident, cost, deployment data products via MCP</td></tr>
+        <tr><td>RoA KPIs (cost, speed, productivity, quality, trust)</td><td>Baseline Phase 1; quarterly review from Phase 3</td></tr>
+        <tr><td>Operator → orchestrator workforce shift</td><td>Agentic CoE, new roles, human-AI pods Phase 4</td></tr>
+        <tr><td>44% change readiness (down from 74%)</td><td>Co-design guardrails; transparent agent limits</td></tr>
+      </tbody>
+    </table>
+  </section>
+
+  <section>
+    <h2>Six pillars — cloud team application</h2>
+    <div class="pillars">
+      <div class="pillar"><strong>1. Adaptive strategy</strong>Agentic CoE; overlay pilots → by-design platform catalog</div>
+      <div class="pillar"><strong>2. Governance</strong>Guardian agents; policy-as-code; tier model; audit to SIEM</div>
+      <div class="pillar"><strong>3. Data ecosystem</strong>Convergence products; vector runbooks; expertise in evals</div>
+      <div class="pillar"><strong>4. Platform enablement</strong>GitHub control plane; MCP gateway; agent-mesh</div>
+      <div class="pillar"><strong>5. Workforce</strong>Role redesign; Autonomy Auditor; Human-AI Coach</div>
+      <div class="pillar"><strong>6. Change management</strong>Co-design guardrails; stagility; trust building</div>
+    </div>
+  </section>
+
+  <section>
+    <h2>Target operating model</h2>
+    <div class="chart-wrap">
+      <svg viewBox="0 0 900 360" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Cloud team agentic operating model">
+        <defs>
+          <marker id="arr" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto"><polygon points="0 0,8 3,0 6" fill="#63666a"/></marker>
+          <marker id="arr-g" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto"><polygon points="0 0,8 3,0 6" fill="#86BC25"/></marker>
+        </defs>
+        <rect width="100%" height="100%" fill="#ffffff"/>
+        <!-- Humans -->
+        <rect x="24" y="24" width="200" height="100" rx="8" fill="rgba(0,0,0,0.02)" stroke="rgba(0,0,0,0.12)"/>
+        <text x="124" y="48" text-anchor="middle" font-size="9" fill="#75787b" font-family="Geist Mono, monospace" letter-spacing="0.1em">CLOUD TEAM</text>
+        <text x="124" y="68" text-anchor="middle" font-size="10" font-family="Open Sans, sans-serif">Orchestrate · Supervise</text>
+        <text x="124" y="84" text-anchor="middle" font-size="9" fill="#63666a" font-family="Open Sans, sans-serif">Operator → Strategist</text>
+        <!-- Control plane -->
+        <rect x="280" y="24" width="340" height="160" rx="8" fill="rgba(134,188,37,0.06)" stroke="#86BC25" stroke-width="1.2"/>
+        <text x="450" y="48" text-anchor="middle" font-size="9" fill="#86BC25" font-family="Geist Mono, monospace" letter-spacing="0.1em">GITHUB CONTROL PLANE</text>
+        <rect x="300" y="60" width="80" height="32" rx="4" fill="#fff" stroke="rgba(0,0,0,0.12)"/>
+        <text x="340" y="80" text-anchor="middle" font-size="9" font-family="Open Sans, sans-serif">Agents</text>
+        <rect x="395" y="60" width="80" height="32" rx="4" fill="rgba(134,188,37,0.12)" stroke="#86BC25"/>
+        <text x="435" y="80" text-anchor="middle" font-size="9" font-weight="600" font-family="Open Sans, sans-serif">Workflows</text>
+        <rect x="490" y="60" width="110" height="32" rx="4" fill="rgba(16,118,168,0.1)" stroke="#1076A8"/>
+        <text x="545" y="80" text-anchor="middle" font-size="9" font-family="Open Sans, sans-serif">Guardian agents</text>
+        <text x="450" y="120" text-anchor="middle" font-size="9" fill="#63666a" font-family="Open Sans, sans-serif">Overlay (Phase 1–3) → By-design (Phase 5–6)</text>
+        <text x="450" y="140" text-anchor="middle" font-size="9" fill="#63666a" font-family="Open Sans, sans-serif" font-style="italic">Agents propose · Workflows execute · Guardians monitor</text>
+        <!-- Agent mesh -->
+        <rect x="280" y="210" width="340" height="100" rx="8" fill="rgba(16,118,168,0.06)" stroke="#1076A8"/>
+        <text x="450" y="234" text-anchor="middle" font-size="9" fill="#1076A8" font-family="Geist Mono, monospace" letter-spacing="0.1em">AGENT-MESH · MCP GATEWAY</text>
+        <rect x="300" y="250" width="75" height="32" rx="4" fill="#fff" stroke="rgba(0,0,0,0.12)"/>
+        <text x="337" y="270" text-anchor="middle" font-size="9" font-family="Open Sans, sans-serif">Monitor</text>
+        <rect x="388" y="250" width="75" height="32" rx="4" fill="#fff" stroke="rgba(0,0,0,0.12)"/>
+        <text x="425" y="270" text-anchor="middle" font-size="9" font-family="Open Sans, sans-serif">ITSM</text>
+        <rect x="476" y="250" width="120" height="32" rx="4" fill="#fff" stroke="rgba(0,0,0,0.12)"/>
+        <text x="536" y="270" text-anchor="middle" font-size="9" font-family="Open Sans, sans-serif">Cloud (gated)</text>
+        <!-- Arrows -->
+        <line x1="224" y1="74" x2="276" y2="74" stroke="#63666a" stroke-width="1.2" marker-end="url(#arr)"/>
+        <line x1="450" y1="184" x2="450" y2="206" stroke="#86BC25" stroke-width="1.4" marker-end="url(#arr-g)"/>
+        <text x="470" y="198" font-size="8" fill="#86BC25" font-family="Geist Mono, monospace">OIDC</text>
+        <!-- RoA -->
+        <rect x="660" y="120" width="200" height="80" rx="8" fill="#000000"/>
+        <text x="760" y="148" text-anchor="middle" font-size="9" fill="#86BC25" font-family="Geist Mono, monospace" letter-spacing="0.1em">RoA KPIs</text>
+        <text x="760" y="168" text-anchor="middle" font-size="9" fill="#d0d0ce" font-family="Open Sans, sans-serif">Cost · Speed · Productivity</text>
+        <text x="760" y="184" text-anchor="middle" font-size="9" fill="#d0d0ce" font-family="Open Sans, sans-serif">Quality · Trust</text>
+        <line x1="620" y1="140" x2="656" y2="140" stroke="#63666a" stroke-width="0.8" stroke-dasharray="4,3"/>
+      </svg>
+      <p class="chart-caption">Figure 2 — Agentic operating model with guardian agents and MCP agent-mesh (ADR 001–002)</p>
+    </div>
+  </section>
+
+  <section>
+    <h2>Six-phase roadmap</h2>
+    <div class="chart-wrap">
+      <svg viewBox="0 0 900 120" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Roadmap timeline with autonomy levels">
+        <rect width="100%" height="100%" fill="#ffffff"/>
+        <line x1="40" y1="60" x2="860" y2="60" stroke="#bbbcbc" stroke-width="2"/>
+        <circle cx="80" cy="60" r="8" fill="#86BC25"/>
+        <text x="80" y="38" text-anchor="middle" font-size="7" font-family="Geist Mono, monospace" fill="#86BC25">L0→L1</text>
+        <text x="80" y="88" text-anchor="middle" font-size="8" font-family="Open Sans, sans-serif">P1 Wk 1-4</text>
+        <circle cx="200" cy="60" r="8" fill="#86BC25"/>
+        <text x="200" y="38" text-anchor="middle" font-size="7" font-family="Geist Mono, monospace" fill="#86BC25">L1</text>
+        <text x="200" y="88" text-anchor="middle" font-size="8" font-family="Open Sans, sans-serif">P2 Wk 5-8</text>
+        <circle cx="340" cy="60" r="8" fill="#1076A8"/>
+        <text x="340" y="38" text-anchor="middle" font-size="7" font-family="Geist Mono, monospace" fill="#1076A8">L1→L2</text>
+        <text x="340" y="88" text-anchor="middle" font-size="8" font-family="Open Sans, sans-serif">P3 Wk 9-16</text>
+        <circle cx="500" cy="60" r="8" fill="#1076A8"/>
+        <text x="500" y="38" text-anchor="middle" font-size="7" font-family="Geist Mono, monospace" fill="#1076A8">L2→L3</text>
+        <text x="500" y="88" text-anchor="middle" font-size="8" font-family="Open Sans, sans-serif">P4 Mo 5-8</text>
+        <circle cx="660" cy="60" r="8" fill="#046A38"/>
+        <text x="660" y="38" text-anchor="middle" font-size="7" font-family="Geist Mono, monospace" fill="#046A38">L3→L4</text>
+        <text x="660" y="88" text-anchor="middle" font-size="8" font-family="Open Sans, sans-serif">P5 Mo 9-12</text>
+        <circle cx="820" cy="60" r="8" fill="#000"/>
+        <text x="820" y="38" text-anchor="middle" font-size="7" font-family="Geist Mono, monospace" fill="#86BC25">L4</text>
+        <text x="820" y="88" text-anchor="middle" font-size="8" font-family="Open Sans, sans-serif">P6 Mo 13-18</text>
+      </svg>
+      <p class="chart-caption">Figure 3 — Phases mapped to autonomy ladder transitions</p>
+    </div>
+
+    <div class="phase-grid">
+      <div class="phase-card active">
+        <div class="num">PHASE 1</div>
+        <div class="level">Assist → Suggest · Overlay</div>
+        <h3>Foundation</h3>
+        <div class="when">Weeks 1–4 · Blueprint 30 days</div>
+        <ul>
+          <li>AI Platform Owner + RoA baseline</li>
+          <li>2 overlay pilots chartered</li>
+          <li>Agentic CoE charter</li>
+          <li>Sovereign cloud map v0</li>
+        </ul>
+      </div>
+      <div class="phase-card active">
+        <div class="num">PHASE 2</div>
+        <div class="level">Suggest · Governed overlay</div>
+        <h3>Govern &amp; CoE</h3>
+        <div class="when">Weeks 5–8</div>
+        <ul>
+          <li>Policy-as-code v1</li>
+          <li>Agent inventory + risk tiers</li>
+          <li>Agentic CoE operational</li>
+          <li>OIDC read-only</li>
+        </ul>
+      </div>
+      <div class="phase-card">
+        <div class="num">PHASE 3</div>
+        <div class="level">Suggest → Execute</div>
+        <h3>Production Execute</h3>
+        <div class="when">Weeks 9–16 · Blueprint 90 days</div>
+        <ul>
+          <li>Bounded E2E agent tasks</li>
+          <li>Convergence data products v1</li>
+          <li>RoA dashboard v1</li>
+          <li>≥70% weekly active use</li>
+        </ul>
+      </div>
+      <div class="phase-card">
+        <div class="num">PHASE 4</div>
+        <div class="level">Execute → Orchestrate</div>
+        <h3>Multistep workflows</h3>
+        <div class="when">Months 5–8 · Blueprint 180 days</div>
+        <ul>
+          <li>Incident Assistant orchestration</li>
+          <li>Guardian agent v1</li>
+          <li>Human-AI pod pilot</li>
+          <li>Co-design guardrail sprints</li>
+        </ul>
+      </div>
+      <div class="phase-card">
+        <div class="num">PHASE 5</div>
+        <div class="level">Orchestrate → Optimize</div>
+        <h3>By-design change</h3>
+        <div class="when">Months 9–12 · Blueprint 12 months</div>
+        <ul>
+          <li>Cloud Change Planner (by-design)</li>
+          <li>MCP gateway + agent-mesh</li>
+          <li>Vector data fabric</li>
+          <li>Autonomy rate on core workflows</li>
+        </ul>
+      </div>
+      <div class="phase-card">
+        <div class="num">PHASE 6</div>
+        <div class="level">Optimize · Platform mesh</div>
+        <h3>Platform as product</h3>
+        <div class="when">Months 13–18</div>
+        <ul>
+          <li>Self-service agent catalog</li>
+          <li>Multi-agent platform workflows</li>
+          <li>Executive RoA dashboard</li>
+          <li>Roadmap v2 → Self-evolve</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h2>Use cases by autonomy level</h2>
+    <table>
+      <thead><tr><th>Level</th><th>Cloud use case</th><th>Phase</th><th>Max tier</th></tr></thead>
+      <tbody>
+        <tr><td>0 Assist</td><td>Log explainer, metric summary, FAQ</td><td>1–3</td><td>0</td></tr>
+        <tr><td>1 Suggest</td><td>Daily briefing, plan "what-if", patch priority</td><td>1–3</td><td>0–1</td></tr>
+        <tr><td>2 Execute</td><td>End-to-end intake enrichment, runbook draft PR</td><td>3–4</td><td>1–2</td></tr>
+        <tr><td>3 Orchestrate</td><td>Incident triage → context → containment playbook</td><td>4–5</td><td>2</td></tr>
+        <tr><td>4 Optimize</td><td>Change PR + plan + rollback; capacity optimization</td><td>5–6</td><td>2–3</td></tr>
+      </tbody>
+    </table>
+  </section>
+
+  <section>
+    <h2>Return-on-Autonomy (RoA) metrics</h2>
+    <div class="chart-wrap">
+      <svg viewBox="0 0 700 240" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="RoA balanced scorecard">
+        <rect width="100%" height="100%" fill="#ffffff"/>
+        <text x="350" y="120" text-anchor="middle" font-size="10" fill="#75787b" font-family="Geist Mono, monospace" letter-spacing="0.1em">RoA BALANCED SCORECARD</text>
+        <circle cx="350" cy="120" r="55" fill="rgba(134,188,37,0.08)" stroke="#86BC25" stroke-width="1"/>
+        <text x="350" y="124" text-anchor="middle" font-size="12" font-weight="600" font-family="Open Sans, sans-serif">RoA</text>
+
+        <rect x="300" y="24" width="100" height="28" rx="5" fill="rgba(134,188,37,0.18)" stroke="#86BC25"/>
+        <text x="350" y="42" text-anchor="middle" font-size="10" font-weight="600" font-family="Open Sans, sans-serif">Cost</text>
+        <line x1="350" y1="52" x2="350" y2="65" stroke="#86BC25"/>
+
+        <rect x="520" y="72" width="100" height="28" rx="5" fill="rgba(16,118,168,0.18)" stroke="#1076A8"/>
+        <text x="570" y="90" text-anchor="middle" font-size="10" font-weight="600" font-family="Open Sans, sans-serif">Speed</text>
+        <line x1="490" y1="100" x2="405" y2="115" stroke="#1076A8"/>
+
+        <rect x="520" y="140" width="100" height="28" rx="5" fill="rgba(67,176,42,0.15)" stroke="#43B02A"/>
+        <text x="570" y="158" text-anchor="middle" font-size="10" font-weight="600" font-family="Open Sans, sans-serif">Productivity</text>
+        <line x1="490" y1="154" x2="405" y2="130" stroke="#43B02A"/>
+
+        <rect x="80" y="140" width="100" height="28" rx="5" fill="rgba(4,106,56,0.12)" stroke="#046A38"/>
+        <text x="130" y="158" text-anchor="middle" font-size="10" font-weight="600" font-family="Open Sans, sans-serif">Quality</text>
+        <line x1="180" y1="154" x2="295" y2="130" stroke="#046A38"/>
+
+        <rect x="80" y="72" width="100" height="28" rx="5" fill="rgba(117,120,123,0.15)" stroke="#75787b"/>
+        <text x="130" y="90" text-anchor="middle" font-size="10" font-weight="600" font-family="Open Sans, sans-serif">Trust</text>
+        <line x1="180" y1="100" x2="295" y2="115" stroke="#75787b"/>
+
+        <text x="350" y="210" text-anchor="middle" font-size="10" fill="#63666a" font-family="Open Sans, sans-serif">Cloud targets: −20% lead time · ≥30% tasks at Execute+ · ≥90% agent reliability</text>
+        <text x="350" y="228" text-anchor="middle" font-size="9" fill="#63666a" font-family="Open Sans, sans-serif" font-style="italic">Baseline Phase 1 · Quarterly review from Phase 3</text>
+      </svg>
+      <p class="chart-caption">Figure 4 — RoA dimensions for cloud platform operations</p>
+    </div>
+  </section>
+
+  <section>
+    <h2>Integration patterns</h2>
+    <table>
+      <thead><tr><th>Pattern</th><th>When</th><th>Cloud examples</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Overlay</strong></td><td>Phase 1–3</td><td>Briefings, intake, plan summary on existing GitHub/ITSM flows</td></tr>
+        <tr><td><strong>As-a-service</strong></td><td>Phase 1–ongoing</td><td>Copilot, enterprise IDE agents, SaaS-embedded analytics</td></tr>
+        <tr><td><strong>By design</strong></td><td>Phase 5–6</td><td>Incident → change → deploy as agent-orchestrated value chain</td></tr>
+      </tbody>
+    </table>
+  </section>
+
+  <section>
+    <h2>Conclusion &amp; next steps</h2>
+    <p>Treat autonomy as a <strong>staged journey, not a plug-in feature</strong>. Each phase builds data fabric, talent, and guardrails for the next leap. Quick overlay wins (Assist/Suggest) build trust in months 1–4; durable value requires guardian agents, MCP agent-mesh, by-design change flows, and role redesign across all six pillars.</p>
+    <div class="cta">
+      <h3>Immediate actions</h3>
+      <p>1. Name AI Platform Owner · 2. Charter Agentic CoE · 3. Launch two overlay pilots with RoA baseline · 4. Map sovereign cloud v0 · 5. Review Phase 1 with security and IT leadership</p>
+    </div>
+  </section>
+
+</div>
+
+<footer>
+  <p>Based on Deloitte <em>Agentic enterprise 2028</em>, <em>State of AI 2026</em>, and the <a href="../architecture/github-agentic-it-control-plane.md">GitHub-centered agentic IT control plane</a>.</p>
+  <p><a href="./it-cloud-team-ai-roadmap.md">Full roadmap (Markdown)</a> · <a href="../reports/agentic-ai-enterprise-2028-summary.html">Agentic Enterprise summary</a></p>
+</footer>
+
+</body>
+</html>

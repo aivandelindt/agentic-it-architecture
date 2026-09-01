@@ -1,0 +1,708 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Agentic Enterprise 2028 — Summary</title>
+  <link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300;0,400;0,600;0,700;1,300&family=Geist+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --paper:      #ffffff;
+      --paper-2:    #e8eae9;
+      --ink:        #000000;
+      --muted:      #63666a;
+      --soft:       #75787b;
+      --rule:       rgba(0,0,0,0.12);
+      --accent:     #86BC25;
+      --accent-tint:rgba(134,188,37,0.08);
+      --link:       #1076A8;
+      --series-1:   #43B02A;
+      --series-2:   #1076A8;
+      --series-3:   #75787b;
+      --series-4:   #046A38;
+      --font-sans:  'Open Sans', system-ui, sans-serif;
+      --font-mono:  'Geist Mono', ui-monospace, monospace;
+    }
+
+    body {
+      font-family: var(--font-sans);
+      background: var(--paper-2);
+      color: var(--ink);
+      line-height: 1.6;
+      font-size: 1rem;
+      font-weight: 400;
+    }
+
+    .site-header {
+      background: var(--ink);
+      color: var(--paper);
+      padding: 1.25rem 2rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+    .site-header .logo { height: 28px; width: auto; }
+    .site-header .meta {
+      font-family: var(--font-mono);
+      font-size: 0.66rem;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--soft);
+    }
+
+    .hero {
+      background: var(--paper);
+      border-bottom: 3px solid var(--accent);
+      padding: 3rem 2rem 2.5rem;
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+    .hero .eyebrow {
+      font-family: var(--font-mono);
+      font-size: 0.66rem;
+      font-weight: 500;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 0.75rem;
+    }
+    .hero h1 {
+      font-size: clamp(1.75rem, 3vw + 0.5rem, 2.5rem);
+      font-weight: 300;
+      letter-spacing: -0.02em;
+      line-height: 1.15;
+      margin-bottom: 0.5rem;
+    }
+    .hero .subtitle {
+      font-size: 1.125rem;
+      font-weight: 300;
+      color: var(--muted);
+      font-style: italic;
+      margin-bottom: 1.25rem;
+    }
+    .hero .source {
+      font-size: 0.875rem;
+      color: var(--soft);
+    }
+    .hero .source a { color: var(--link); text-decoration: none; }
+    .hero .source a:hover { text-decoration: underline; }
+
+    .container {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 2rem;
+    }
+
+    section {
+      background: var(--paper);
+      border-radius: 8px;
+      padding: 2rem;
+      margin-bottom: 1.5rem;
+      border: 1px solid var(--rule);
+    }
+
+    h2 {
+      font-size: 1.375rem;
+      font-weight: 300;
+      letter-spacing: -0.01em;
+      margin-bottom: 1.25rem;
+      padding-bottom: 0.5rem;
+      border-bottom: 2px solid var(--accent);
+      display: inline-block;
+    }
+    h3 {
+      font-size: 1rem;
+      font-weight: 600;
+      margin: 1.5rem 0 0.75rem;
+      color: var(--ink);
+    }
+    p { margin-bottom: 1rem; color: var(--ink); }
+    p.lead { font-size: 1.0625rem; font-weight: 300; color: var(--muted); }
+
+    ul, ol { margin: 0 0 1rem 1.25rem; }
+    li { margin-bottom: 0.35rem; }
+
+    .stat-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 1rem;
+      margin: 1.5rem 0;
+    }
+    .stat-card {
+      background: var(--accent-tint);
+      border: 1px solid var(--accent);
+      border-radius: 8px;
+      padding: 1.25rem;
+      text-align: center;
+    }
+    .stat-card .value {
+      font-size: 2rem;
+      font-weight: 300;
+      color: var(--ink);
+      line-height: 1.1;
+    }
+    .stat-card .value span { color: var(--accent); font-weight: 600; }
+    .stat-card .label {
+      font-family: var(--font-mono);
+      font-size: 0.7rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--soft);
+      margin-top: 0.5rem;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 1rem 0;
+      font-size: 0.9rem;
+    }
+    th, td {
+      padding: 0.65rem 1rem;
+      text-align: left;
+      border-bottom: 1px solid var(--rule);
+    }
+    th {
+      font-family: var(--font-mono);
+      font-size: 0.7rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--soft);
+      font-weight: 500;
+      background: rgba(0,0,0,0.02);
+    }
+    tr:hover td { background: rgba(134,188,37,0.04); }
+
+    .chart-wrap {
+      margin: 1.5rem 0;
+      overflow-x: auto;
+    }
+    .chart-wrap svg { display: block; max-width: 100%; height: auto; }
+    .chart-caption {
+      font-family: var(--font-mono);
+      font-size: 0.7rem;
+      letter-spacing: 0.06em;
+      color: var(--soft);
+      margin-top: 0.5rem;
+      text-align: center;
+    }
+
+    .conclusion-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.5rem;
+      margin: 1.5rem 0;
+    }
+    @media (max-width: 700px) {
+      .conclusion-grid { grid-template-columns: 1fr; }
+    }
+    .conclusion-box {
+      border-radius: 8px;
+      padding: 1.25rem;
+    }
+    .conclusion-box.working {
+      background: var(--accent-tint);
+      border: 1px solid var(--accent);
+    }
+    .conclusion-box.not-working {
+      background: rgba(0,0,0,0.03);
+      border: 1px solid var(--rule);
+    }
+    .conclusion-box h3 {
+      margin-top: 0;
+      font-size: 0.85rem;
+      font-family: var(--font-mono);
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+    }
+    .conclusion-box.working h3 { color: var(--series-4); }
+    .conclusion-box.not-working h3 { color: var(--muted); }
+
+    .bottom-line {
+      background: var(--ink);
+      color: var(--paper);
+      border-radius: 8px;
+      padding: 1.5rem 2rem;
+      margin-top: 1.5rem;
+    }
+    .bottom-line h3 {
+      color: var(--accent);
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      margin: 0 0 0.75rem;
+    }
+    .bottom-line p { color: var(--paper); margin: 0; font-weight: 300; }
+
+    footer {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 2rem;
+      font-size: 0.8rem;
+      color: var(--soft);
+      text-align: center;
+    }
+    footer a { color: var(--link); }
+  </style>
+</head>
+<body>
+
+<header class="site-header">
+  <img src="../../images/deloitte.svg" alt="Deloitte" class="logo" width="140" height="28">
+  <span class="meta">Deloitte AI Institute · September 2025</span>
+</header>
+
+<div class="hero">
+  <p class="eyebrow">Agentic Enterprise 2028</p>
+  <h1>A blueprint for cost savings, job creation, and faster growth</h1>
+  <p class="subtitle">Summary &amp; conclusion — through agentic AI</p>
+  <p class="source">
+    Source: <a href="../../images/agentic-ai-enterprise-2028.pdf">Deloitte Agentic enterprise 2028</a> (Sep 2025) ·
+    <a href="./agentic-ai-enterprise-2028-summary.md">Markdown edition</a>
+  </p>
+</div>
+
+<div class="container">
+
+  <!-- Executive summary -->
+  <section id="executive-summary">
+    <h2>Executive summary</h2>
+    <p class="lead">Agentic AI is not the next wave of automation — it is the <strong>operating logic of tomorrow's enterprise</strong>. Organizations that embrace autonomy by 2028 will likely reclaim operating costs, release products faster, and redeploy talent to higher-value work. Benefits are substantial but matched by complexity across strategy, governance, data, platform, workforce, and change management.</p>
+
+    <div class="stat-grid">
+      <div class="stat-card">
+        <div class="value"><span>77%</span></div>
+        <div class="label">CEOs say AI will shape business</div>
+      </div>
+      <div class="stat-card">
+        <div class="value"><span>1/3</span></div>
+        <div class="label">Enterprise apps with agents by 2028 (Gartner)</div>
+      </div>
+      <div class="stat-card">
+        <div class="value"><span>6</span></div>
+        <div class="label">Autonomy ladder maturity levels</div>
+      </div>
+      <div class="stat-card">
+        <div class="value"><span>$200B+</span></div>
+        <div class="label">AI infrastructure spend by 2028 (IDC)</div>
+      </div>
+    </div>
+
+    <!-- Value vs complexity diagram -->
+    <div class="chart-wrap">
+      <svg viewBox="0 0 900 240" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Value unlocked versus complexity matched">
+        <defs>
+          <marker id="arrow-teal" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto"><polygon points="0 0, 8 3, 0 6" fill="#1076A8"/></marker>
+        </defs>
+        <rect width="100%" height="100%" fill="#ffffff"/>
+        <text x="24" y="28" fill="#75787b" font-size="9" font-family="Geist Mono, monospace" letter-spacing="0.12em">VALUE UNLOCKED</text>
+        <rect x="24" y="40" width="130" height="48" rx="6" fill="rgba(134,188,37,0.08)" stroke="#86BC25" stroke-width="1"/>
+        <text x="89" y="62" text-anchor="middle" font-size="10" font-family="Open Sans, sans-serif" font-weight="600">Cost takeout</text>
+        <rect x="164" y="40" width="130" height="48" rx="6" fill="rgba(134,188,37,0.08)" stroke="#86BC25" stroke-width="1"/>
+        <text x="229" y="62" text-anchor="middle" font-size="10" font-family="Open Sans, sans-serif" font-weight="600">Rapid decisions</text>
+        <rect x="304" y="40" width="130" height="48" rx="6" fill="rgba(134,188,37,0.08)" stroke="#86BC25" stroke-width="1"/>
+        <text x="369" y="62" text-anchor="middle" font-size="10" font-family="Open Sans, sans-serif" font-weight="600">Revenue uplift</text>
+        <rect x="444" y="40" width="130" height="48" rx="6" fill="rgba(134,188,37,0.08)" stroke="#86BC25" stroke-width="1"/>
+        <text x="509" y="62" text-anchor="middle" font-size="10" font-family="Open Sans, sans-serif" font-weight="600">Talent leverage</text>
+        <rect x="584" y="40" width="160" height="48" rx="6" fill="rgba(134,188,37,0.08)" stroke="#86BC25" stroke-width="1"/>
+        <text x="664" y="62" text-anchor="middle" font-size="10" font-family="Open Sans, sans-serif" font-weight="600">Faster time-to-market</text>
+
+        <line x1="450" y1="96" x2="450" y2="112" stroke="#63666a" stroke-width="1.2" marker-end="url(#arrow-teal)"/>
+
+        <text x="24" y="132" fill="#75787b" font-size="9" font-family="Geist Mono, monospace" letter-spacing="0.12em">COMPLEXITY MATCHED — SIX PILLARS</text>
+        <rect x="24" y="144" width="130" height="36" rx="6" fill="#ffffff" stroke="rgba(0,0,0,0.12)" stroke-width="0.8"/>
+        <text x="89" y="166" text-anchor="middle" font-size="10" font-family="Open Sans, sans-serif">Strategy</text>
+        <rect x="164" y="144" width="130" height="36" rx="6" fill="#ffffff" stroke="rgba(0,0,0,0.12)" stroke-width="0.8"/>
+        <text x="229" y="166" text-anchor="middle" font-size="10" font-family="Open Sans, sans-serif">Governance</text>
+        <rect x="304" y="144" width="130" height="36" rx="6" fill="#ffffff" stroke="rgba(0,0,0,0.12)" stroke-width="0.8"/>
+        <text x="369" y="166" text-anchor="middle" font-size="10" font-family="Open Sans, sans-serif">Data fabric</text>
+        <rect x="444" y="144" width="130" height="36" rx="6" fill="#ffffff" stroke="rgba(0,0,0,0.12)" stroke-width="0.8"/>
+        <text x="509" y="166" text-anchor="middle" font-size="10" font-family="Open Sans, sans-serif">Platform</text>
+        <rect x="584" y="144" width="130" height="36" rx="6" fill="#ffffff" stroke="rgba(0,0,0,0.12)" stroke-width="0.8"/>
+        <text x="649" y="166" text-anchor="middle" font-size="10" font-family="Open Sans, sans-serif">Workforce</text>
+        <rect x="724" y="144" width="130" height="36" rx="6" fill="#ffffff" stroke="rgba(0,0,0,0.12)" stroke-width="0.8"/>
+        <text x="789" y="166" text-anchor="middle" font-size="10" font-family="Open Sans, sans-serif">Change mgmt</text>
+
+        <rect x="280" y="200" width="340" height="32" rx="8" fill="#000000"/>
+        <text x="450" y="220" text-anchor="middle" fill="#86BC25" font-size="10" font-family="Geist Mono, monospace" letter-spacing="0.12em">RETURN-ON-AUTONOMY (RoA) KPIs</text>
+        <line x1="450" y1="180" x2="450" y2="200" stroke="#63666a" stroke-width="0.8" stroke-dasharray="4,3"/>
+      </svg>
+      <p class="chart-caption">Figure 1 — Benefits require concurrent evolution across six pillars, measured via RoA</p>
+    </div>
+  </section>
+
+  <!-- Why now -->
+  <section id="why-now">
+    <h2>Why now? The imperative for autonomy</h2>
+    <p>Three macro forces compress the decision window for agentic AI adoption.</p>
+
+    <div class="chart-wrap">
+      <svg viewBox="0 0 700 200" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Three macro forces driving agentic AI">
+        <rect width="100%" height="100%" fill="#ffffff"/>
+        <rect x="24" y="32" width="200" height="140" rx="8" fill="rgba(134,188,37,0.08)" stroke="#86BC25" stroke-width="1.2"/>
+        <text x="124" y="60" text-anchor="middle" font-size="9" fill="#86BC25" font-family="Geist Mono, monospace" letter-spacing="0.1em">COMPETITIVE</text>
+        <text x="124" y="88" text-anchor="middle" font-size="22" font-weight="300" font-family="Open Sans, sans-serif">77%</text>
+        <text x="124" y="108" text-anchor="middle" font-size="10" fill="#63666a" font-family="Open Sans, sans-serif">CEOs: AI shapes business</text>
+        <text x="124" y="128" text-anchor="middle" font-size="10" fill="#63666a" font-family="Open Sans, sans-serif">2/3 models not ready</text>
+
+        <rect x="250" y="32" width="200" height="140" rx="8" fill="#ffffff" stroke="rgba(0,0,0,0.12)" stroke-width="0.8"/>
+        <text x="350" y="60" text-anchor="middle" font-size="9" fill="#75787b" font-family="Geist Mono, monospace" letter-spacing="0.1em">REGULATORY</text>
+        <text x="350" y="88" text-anchor="middle" font-size="13" font-weight="600" font-family="Open Sans, sans-serif">EU AI Act</text>
+        <text x="350" y="108" text-anchor="middle" font-size="10" fill="#63666a" font-family="Open Sans, sans-serif">Compliance as</text>
+        <text x="350" y="124" text-anchor="middle" font-size="10" fill="#63666a" font-family="Open Sans, sans-serif">differentiator</text>
+
+        <rect x="476" y="32" width="200" height="140" rx="8" fill="#ffffff" stroke="rgba(0,0,0,0.12)" stroke-width="0.8"/>
+        <text x="576" y="60" text-anchor="middle" font-size="9" fill="#75787b" font-family="Geist Mono, monospace" letter-spacing="0.1em">TECH MOMENTUM</text>
+        <text x="576" y="88" text-anchor="middle" font-size="22" font-weight="300" font-family="Open Sans, sans-serif">33%</text>
+        <text x="576" y="108" text-anchor="middle" font-size="10" fill="#63666a" font-family="Open Sans, sans-serif">Enterprise apps with</text>
+        <text x="576" y="124" text-anchor="middle" font-size="10" fill="#63666a" font-family="Open Sans, sans-serif">agents by 2028</text>
+      </svg>
+      <p class="chart-caption">Figure 2 — Competitive pressure, regulation, and platform shift compress the timeline</p>
+    </div>
+  </section>
+
+  <!-- Autonomy ladder -->
+  <section id="autonomy-ladder">
+    <h2>The autonomy ladder</h2>
+    <p>Six maturity plateaus from basic assistance to self-governing agent meshes. Penetration reflects production-grade deployments at scale.</p>
+
+    <div class="chart-wrap">
+      <svg viewBox="0 0 900 340" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Autonomy ladder penetration 2025 versus 2028">
+        <rect width="100%" height="100%" fill="#ffffff"/>
+        <text x="24" y="24" fill="#75787b" font-size="9" font-family="Geist Mono, monospace" letter-spacing="0.12em">AUTONOMY LADDER — ENTERPRISE PENETRATION (%)</text>
+        <text x="200" y="44" fill="#75787b" font-size="8" font-family="Geist Mono, monospace">2025</text>
+        <text x="520" y="44" fill="#86BC25" font-size="8" font-family="Geist Mono, monospace">2028 OUTLOOK</text>
+
+        <!-- Level 0 Assist -->
+        <text x="24" y="72" font-size="11" font-family="Open Sans, sans-serif" font-weight="600">0 Assist</text>
+        <text x="24" y="86" font-size="9" fill="#63666a" font-family="Open Sans, sans-serif">Operator</text>
+        <rect x="120" y="58" width="480" height="18" rx="3" fill="rgba(16,118,168,0.25)" stroke="#1076A8" stroke-width="0.8"/>
+        <text x="608" y="71" font-size="10" font-family="Open Sans, sans-serif">70–80%+</text>
+        <rect x="120" y="80" width="560" height="18" rx="3" fill="rgba(134,188,37,0.35)" stroke="#86BC25" stroke-width="0.8"/>
+        <text x="688" y="93" font-size="10" font-weight="600" fill="#86BC25" font-family="Open Sans, sans-serif">90–97%</text>
+
+        <!-- Level 1 Suggest -->
+        <text x="24" y="122" font-size="11" font-family="Open Sans, sans-serif" font-weight="600">1 Suggest</text>
+        <text x="24" y="136" font-size="9" fill="#63666a" font-family="Open Sans, sans-serif">Guide</text>
+        <rect x="120" y="108" width="360" height="18" rx="3" fill="rgba(16,118,168,0.25)" stroke="#1076A8" stroke-width="0.8"/>
+        <text x="488" y="121" font-size="10" font-family="Open Sans, sans-serif">50–60%</text>
+        <rect x="120" y="130" width="480" height="18" rx="3" fill="rgba(134,188,37,0.35)" stroke="#86BC25" stroke-width="0.8"/>
+        <text x="608" y="143" font-size="10" font-weight="600" fill="#86BC25" font-family="Open Sans, sans-serif">75–85%</text>
+
+        <!-- Level 2 Execute -->
+        <text x="24" y="172" font-size="11" font-family="Open Sans, sans-serif" font-weight="600">2 Execute</text>
+        <text x="24" y="186" font-size="9" fill="#63666a" font-family="Open Sans, sans-serif">Monitor</text>
+        <rect x="120" y="158" width="180" height="18" rx="3" fill="rgba(16,118,168,0.25)" stroke="#1076A8" stroke-width="0.8"/>
+        <text x="308" y="171" font-size="10" font-family="Open Sans, sans-serif">25–30%</text>
+        <rect x="120" y="180" width="396" height="18" rx="3" fill="rgba(134,188,37,0.35)" stroke="#86BC25" stroke-width="0.8"/>
+        <text x="524" y="193" font-size="10" font-weight="600" fill="#86BC25" font-family="Open Sans, sans-serif">55–65%</text>
+
+        <!-- Level 3 Orchestrate -->
+        <text x="24" y="222" font-size="11" font-family="Open Sans, sans-serif" font-weight="600">3 Orchestrate</text>
+        <text x="24" y="236" font-size="9" fill="#63666a" font-family="Open Sans, sans-serif">Supervisor</text>
+        <rect x="120" y="208" width="60" height="18" rx="3" fill="rgba(16,118,168,0.25)" stroke="#1076A8" stroke-width="0.8"/>
+        <text x="188" y="221" font-size="10" font-family="Open Sans, sans-serif">8–10%</text>
+        <rect x="120" y="230" width="180" height="18" rx="3" fill="rgba(134,188,37,0.35)" stroke="#86BC25" stroke-width="0.8"/>
+        <text x="308" y="243" font-size="10" font-weight="600" fill="#86BC25" font-family="Open Sans, sans-serif">25–35%</text>
+
+        <!-- Level 4 Optimize -->
+        <text x="24" y="272" font-size="11" font-family="Open Sans, sans-serif" font-weight="600">4 Optimize</text>
+        <text x="24" y="286" font-size="9" fill="#63666a" font-family="Open Sans, sans-serif">Strategist</text>
+        <rect x="120" y="258" width="18" height="18" rx="3" fill="rgba(16,118,168,0.25)" stroke="#1076A8" stroke-width="0.8"/>
+        <text x="146" y="271" font-size="10" font-family="Open Sans, sans-serif">2–3%</text>
+        <rect x="120" y="280" width="72" height="18" rx="3" fill="rgba(134,188,37,0.35)" stroke="#86BC25" stroke-width="0.8"/>
+        <text x="200" y="293" font-size="10" font-weight="600" fill="#86BC25" font-family="Open Sans, sans-serif">10–18%</text>
+
+        <!-- Level 5 Self-evolve -->
+        <text x="24" y="322" font-size="11" font-family="Open Sans, sans-serif" font-weight="600">5 Self-evolve</text>
+        <text x="24" y="336" font-size="9" fill="#63666a" font-family="Open Sans, sans-serif">Orchestrator</text>
+        <rect x="120" y="308" width="6" height="18" rx="3" fill="rgba(16,118,168,0.25)" stroke="#1076A8" stroke-width="0.8"/>
+        <text x="134" y="321" font-size="10" font-family="Open Sans, sans-serif">&lt;1%</text>
+        <rect x="120" y="330" width="36" height="18" rx="3" fill="rgba(134,188,37,0.35)" stroke="#86BC25" stroke-width="0.8"/>
+        <text x="164" y="343" font-size="10" font-weight="600" fill="#86BC25" font-family="Open Sans, sans-serif">5–10%</text>
+      </svg>
+      <p class="chart-caption">Figure 3 — Autonomy ladder: 2025 penetration vs. 2028 scenario outlook (Fortune 2000-type orgs)</p>
+    </div>
+
+    <table>
+      <thead>
+        <tr><th>Level</th><th>Human role</th><th>Example (Customer Experience)</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>0 Assist</td><td>Operator</td><td>FAQ returns chatbot</td></tr>
+        <tr><td>1 Suggest</td><td>Guide</td><td>Cross-sell prompts during live chat</td></tr>
+        <tr><td>2 Execute</td><td>Monitor</td><td>End-to-end refund processing</td></tr>
+        <tr><td>3 Orchestrate</td><td>Supervisor</td><td>Proactive outreach to at-risk customers</td></tr>
+        <tr><td>4 Optimize</td><td>Strategist</td><td>Full-funnel marketing campaign design</td></tr>
+        <tr><td>5 Self-evolve</td><td>Orchestrator</td><td>Real-time catalog evolution by agent mesh</td></tr>
+      </tbody>
+    </table>
+  </section>
+
+  <!-- Six pillars -->
+  <section id="six-pillars">
+    <h2>Six pillars: The autonomous operating system</h2>
+    <p>Scaling agentic autonomy requires concurrent evolution across six dimensions — not sequential silos.</p>
+
+    <div class="chart-wrap">
+      <svg viewBox="0 0 900 360" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Six pillars of the autonomous operating system">
+        <defs>
+          <marker id="arrow-muted" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto"><polygon points="0 0, 8 3, 0 6" fill="#63666a"/></marker>
+        </defs>
+        <rect width="100%" height="100%" fill="#ffffff"/>
+        <!-- Row 1 -->
+        <rect x="24" y="40" width="260" height="80" rx="8" fill="rgba(134,188,37,0.08)" stroke="#86BC25" stroke-width="1.2"/>
+        <text x="44" y="68" font-size="9" fill="#86BC25" font-family="Geist Mono, monospace" letter-spacing="0.1em">01</text>
+        <text x="44" y="88" font-size="13" font-weight="600" font-family="Open Sans, sans-serif">Adaptive strategy</text>
+        <text x="44" y="106" font-size="10" fill="#63666a" font-family="Open Sans, sans-serif">Overlay · as-a-service · by design</text>
+
+        <rect x="320" y="40" width="260" height="80" rx="8" fill="#ffffff" stroke="rgba(0,0,0,0.12)" stroke-width="0.8"/>
+        <text x="340" y="68" font-size="9" fill="#75787b" font-family="Geist Mono, monospace" letter-spacing="0.1em">02</text>
+        <text x="340" y="88" font-size="13" font-weight="600" font-family="Open Sans, sans-serif">Risk &amp; governance</text>
+        <text x="340" y="106" font-size="10" fill="#63666a" font-family="Open Sans, sans-serif">Guardian agents · policy-as-code</text>
+
+        <rect x="616" y="40" width="260" height="80" rx="8" fill="#ffffff" stroke="rgba(0,0,0,0.12)" stroke-width="0.8"/>
+        <text x="636" y="68" font-size="9" fill="#75787b" font-family="Geist Mono, monospace" letter-spacing="0.1em">03</text>
+        <text x="636" y="88" font-size="13" font-weight="600" font-family="Open Sans, sans-serif">Intelligent data ecosystem</text>
+        <text x="636" y="106" font-size="10" fill="#63666a" font-family="Open Sans, sans-serif">Convergence architecture · vector fabric</text>
+
+        <line x1="284" y1="80" x2="316" y2="80" stroke="#63666a" stroke-width="1" marker-end="url(#arrow-muted)"/>
+        <line x1="580" y1="80" x2="612" y2="80" stroke="#63666a" stroke-width="1" marker-end="url(#arrow-muted)"/>
+
+        <!-- Row 2 -->
+        <rect x="24" y="160" width="260" height="80" rx="8" fill="#ffffff" stroke="rgba(0,0,0,0.12)" stroke-width="0.8"/>
+        <text x="44" y="188" font-size="9" fill="#75787b" font-family="Geist Mono, monospace" letter-spacing="0.1em">04</text>
+        <text x="44" y="208" font-size="13" font-weight="600" font-family="Open Sans, sans-serif">Platform &amp; tech enablement</text>
+        <text x="44" y="226" font-size="10" fill="#63666a" font-family="Open Sans, sans-serif">MCP · A2A · agent-mesh orchestration</text>
+
+        <rect x="320" y="160" width="260" height="80" rx="8" fill="#ffffff" stroke="rgba(0,0,0,0.12)" stroke-width="0.8"/>
+        <text x="340" y="188" font-size="9" fill="#75787b" font-family="Geist Mono, monospace" letter-spacing="0.1em">05</text>
+        <text x="340" y="208" font-size="13" font-weight="600" font-family="Open Sans, sans-serif">Empowered workforce</text>
+        <text x="340" y="226" font-size="10" fill="#63666a" font-family="Open Sans, sans-serif">Role redesign · new agentic roles</text>
+
+        <rect x="616" y="160" width="260" height="80" rx="8" fill="rgba(134,188,37,0.08)" stroke="#86BC25" stroke-width="1.2"/>
+        <text x="636" y="188" font-size="9" fill="#86BC25" font-family="Geist Mono, monospace" letter-spacing="0.1em">06</text>
+        <text x="636" y="208" font-size="13" font-weight="600" font-family="Open Sans, sans-serif">Ongoing change management</text>
+        <text x="636" y="226" font-size="10" fill="#63666a" font-family="Open Sans, sans-serif">Trust · stagility · community impact</text>
+
+        <line x1="284" y1="200" x2="316" y2="200" stroke="#63666a" stroke-width="1" marker-end="url(#arrow-muted)"/>
+        <line x1="580" y1="200" x2="612" y2="200" stroke="#63666a" stroke-width="1" marker-end="url(#arrow-muted)"/>
+
+        <!-- Center outcome -->
+        <rect x="250" y="280" width="400" height="48" rx="8" fill="#000000"/>
+        <text x="450" y="302" text-anchor="middle" fill="#86BC25" font-size="11" font-family="Geist Mono, monospace" letter-spacing="0.12em">AGENTIC ENTERPRISE</text>
+        <text x="450" y="318" text-anchor="middle" fill="#ffffff" font-size="10" font-family="Open Sans, sans-serif" font-weight="300">Adaptive · self-optimizing · compounding value</text>
+        <line x1="154" y1="240" x2="350" y2="280" stroke="#63666a" stroke-width="0.8" stroke-dasharray="4,3"/>
+        <line x1="746" y1="240" x2="550" y2="280" stroke="#63666a" stroke-width="0.8" stroke-dasharray="4,3"/>
+      </svg>
+      <p class="chart-caption">Figure 4 — Six pillars must evolve concurrently to architect the autonomous operating system</p>
+    </div>
+
+    <h3>Integration patterns</h3>
+    <table>
+      <thead>
+        <tr><th>Pattern</th><th>Approach</th><th>Best for</th></tr>
+      </thead>
+      <tbody>
+        <tr><td><strong>Agents overlay</strong></td><td>Enhance existing workflows incrementally</td><td>Quick wins, low disruption</td></tr>
+        <tr><td><strong>Agents as-a-service</strong></td><td>Pre-built features in SaaS platforms</td><td>Rapid adoption via CRM/ERP/HR</td></tr>
+        <tr><td><strong>Agents by design</strong></td><td>Re-architect as agent networks</td><td>Core transformation, max differentiation</td></tr>
+      </tbody>
+    </table>
+  </section>
+
+  <!-- Workforce -->
+  <section id="workforce">
+    <h2>Empowered workforce — new roles, not fewer jobs</h2>
+    <p>Humans are redefined, not replaced. Global AI infrastructure spending is projected to surpass <strong>$200 billion by 2028</strong>, fueling skilled-trade growth alongside new orchestration roles.</p>
+
+    <div class="chart-wrap">
+      <svg viewBox="0 0 700 260" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Workforce change management context">
+        <rect width="100%" height="100%" fill="#ffffff"/>
+        <text x="24" y="24" fill="#75787b" font-size="9" font-family="Geist Mono, monospace" letter-spacing="0.12em">CHANGE MANAGEMENT CONTEXT</text>
+
+        <text x="24" y="64" font-size="11" font-family="Open Sans, sans-serif">Willingness to support change</text>
+        <rect x="240" y="50" width="264" height="22" rx="4" fill="rgba(16,118,168,0.25)" stroke="#1076A8" stroke-width="0.8"/>
+        <text x="512" y="65" font-size="11" font-family="Open Sans, sans-serif">74% (2016)</text>
+        <rect x="240" y="78" width="156" height="22" rx="4" fill="#75787b" opacity="0.6"/>
+        <text x="404" y="93" font-size="11" font-weight="600" font-family="Open Sans, sans-serif">44% (2024)</text>
+
+        <text x="24" y="134" font-size="11" font-family="Open Sans, sans-serif">Workers crave stability</text>
+        <rect x="240" y="120" width="375" height="22" rx="4" fill="rgba(134,188,37,0.25)" stroke="#86BC25" stroke-width="0.8"/>
+        <text x="622" y="135" font-size="11" font-weight="600" font-family="Open Sans, sans-serif">75%</text>
+
+        <text x="24" y="174" font-size="11" font-family="Open Sans, sans-serif">Leaders say org must be more agile</text>
+        <rect x="240" y="160" width="425" height="22" rx="4" fill="rgba(134,188,37,0.25)" stroke="#86BC25" stroke-width="0.8"/>
+        <text x="672" y="175" font-size="11" font-weight="600" font-family="Open Sans, sans-serif">85%</text>
+
+        <text x="24" y="214" font-size="11" font-family="Open Sans, sans-serif">Concerned about human-machine blur</text>
+        <rect x="240" y="200" width="270" height="22" rx="4" fill="#75787b" opacity="0.5"/>
+        <text x="518" y="215" font-size="11" font-family="Open Sans, sans-serif">54%</text>
+
+        <text x="350" y="248" text-anchor="middle" font-size="10" fill="#63666a" font-family="Open Sans, sans-serif" font-style="italic">Stagility tension: stability vs. agility must be designed into the agentic roadmap</text>
+      </svg>
+      <p class="chart-caption">Figure 5 — Trust and change-readiness deficits require co-designed guardrails</p>
+    </div>
+
+    <h3>Emerging agentic roles</h3>
+    <table>
+      <thead>
+        <tr><th>Domain</th><th>New roles</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>Strategy &amp; business</td><td>Agentic Process Architect, AI Business Translator, Value-Stream Product Owner</td></tr>
+        <tr><td>Engineering &amp; ops</td><td>Multi-agent Systems Engineer, Autonomous Reliability Engineer, Continuous-Learning Steward</td></tr>
+        <tr><td>Trust &amp; risk</td><td>Autonomy Auditor, Trust Lead, Agentic Risk &amp; Compliance Partner</td></tr>
+        <tr><td>People &amp; adoption</td><td>Human-AI Interaction Coach, Adoption Analytics Manager, Human Escalation Officer</td></tr>
+      </tbody>
+    </table>
+  </section>
+
+  <!-- RoA -->
+  <section id="roa">
+    <h2>Return-on-Autonomy (RoA) KPIs</h2>
+    <p>Value compounds as organizations climb the ladder. Each level lays groundwork for the next. RoA spans five balanced dimensions at process and portfolio level.</p>
+
+    <div class="chart-wrap">
+      <svg viewBox="0 0 700 280" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="RoA balanced scorecard dimensions">
+        <rect width="100%" height="100%" fill="#ffffff"/>
+        <text x="350" y="140" text-anchor="middle" font-size="11" fill="#75787b" font-family="Geist Mono, monospace" letter-spacing="0.1em">RoA BALANCED SCORECARD</text>
+        <!-- Pentagon-ish layout with 5 dimensions -->
+        <circle cx="350" cy="140" r="70" fill="none" stroke="#e8eae9" stroke-width="2"/>
+        <circle cx="350" cy="140" r="50" fill="rgba(134,188,37,0.08)" stroke="#86BC25" stroke-width="1"/>
+        <text x="350" y="136" text-anchor="middle" font-size="14" font-weight="600" font-family="Open Sans, sans-serif">RoA</text>
+        <text x="350" y="152" text-anchor="middle" font-size="8" fill="#63666a" font-family="Geist Mono, monospace">5 DIMENSIONS</text>
+
+        <rect x="300" y="24" width="100" height="32" rx="6" fill="rgba(134,188,37,0.18)" stroke="#86BC25" stroke-width="1"/>
+        <text x="350" y="44" text-anchor="middle" font-size="11" font-weight="600" font-family="Open Sans, sans-serif">Cost</text>
+        <line x1="350" y1="56" x2="350" y2="90" stroke="#86BC25" stroke-width="1"/>
+
+        <rect x="520" y="80" width="100" height="32" rx="6" fill="rgba(16,118,168,0.18)" stroke="#1076A8" stroke-width="1"/>
+        <text x="570" y="100" text-anchor="middle" font-size="11" font-weight="600" font-family="Open Sans, sans-serif">Speed</text>
+        <line x1="500" y1="110" x2="420" y2="130" stroke="#1076A8" stroke-width="1"/>
+
+        <rect x="520" y="168" width="100" height="32" rx="6" fill="rgba(67,176,42,0.18)" stroke="#43B02A" stroke-width="1"/>
+        <text x="570" y="188" text-anchor="middle" font-size="11" font-weight="600" font-family="Open Sans, sans-serif">Productivity</text>
+        <line x1="500" y1="188" x2="420" y2="155" stroke="#43B02A" stroke-width="1"/>
+
+        <rect x="80" y="168" width="100" height="32" rx="6" fill="rgba(4,106,56,0.12)" stroke="#046A38" stroke-width="1"/>
+        <text x="130" y="188" text-anchor="middle" font-size="11" font-weight="600" font-family="Open Sans, sans-serif">Quality</text>
+        <line x1="180" y1="188" x2="280" y2="155" stroke="#046A38" stroke-width="1"/>
+
+        <rect x="80" y="80" width="100" height="32" rx="6" fill="rgba(117,120,123,0.15)" stroke="#75787b" stroke-width="1"/>
+        <text x="130" y="100" text-anchor="middle" font-size="11" font-weight="600" font-family="Open Sans, sans-serif">Trust</text>
+        <line x1="180" y1="110" x2="280" y2="130" stroke="#75787b" stroke-width="1"/>
+
+        <text x="350" y="260" text-anchor="middle" font-size="10" fill="#63666a" font-family="Open Sans, sans-serif">Baseline 2025 → aspiration 2028 → quarterly review</text>
+      </svg>
+      <p class="chart-caption">Figure 6 — RoA links technical progress via increased autonomy to enterprise results</p>
+    </div>
+  </section>
+
+  <!-- Roadmap -->
+  <section id="roadmap">
+    <h2>Pragmatic implementation roadmap</h2>
+    <p>Treat autonomy as a <strong>staged journey</strong>, not a plug-in feature. Each phase builds data, talent, and guardrails for the next leap.</p>
+
+    <div class="chart-wrap">
+      <svg viewBox="0 0 900 220" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Agentic implementation timeline">
+        <rect width="100%" height="100%" fill="#ffffff"/>
+        <text x="24" y="24" fill="#75787b" font-size="9" font-family="Geist Mono, monospace" letter-spacing="0.12em">AUTONOMY JOURNEY TIMELINE</text>
+        <!-- Timeline bar -->
+        <line x1="24" y1="100" x2="876" y2="100" stroke="rgba(0,0,0,0.12)" stroke-width="2"/>
+
+        <!-- Milestones -->
+        <circle cx="80" cy="100" r="10" fill="#86BC25"/>
+        <text x="80" y="72" text-anchor="middle" font-size="9" fill="#86BC25" font-family="Geist Mono, monospace">30 DAYS</text>
+        <text x="80" y="130" text-anchor="middle" font-size="10" font-weight="600" font-family="Open Sans, sans-serif">Assist → Suggest</text>
+        <text x="80" y="146" text-anchor="middle" font-size="9" fill="#63666a" font-family="Open Sans, sans-serif">Single-step options</text>
+
+        <circle cx="220" cy="100" r="10" fill="#1076A8"/>
+        <text x="220" y="72" text-anchor="middle" font-size="9" fill="#1076A8" font-family="Geist Mono, monospace">90 DAYS</text>
+        <text x="220" y="130" text-anchor="middle" font-size="10" font-weight="600" font-family="Open Sans, sans-serif">Suggest → Execute</text>
+        <text x="220" y="146" text-anchor="middle" font-size="9" fill="#63666a" font-family="Open Sans, sans-serif">Bounded tasks E2E</text>
+
+        <circle cx="400" cy="100" r="10" fill="#43B02A"/>
+        <text x="400" y="72" text-anchor="middle" font-size="9" fill="#43B02A" font-family="Geist Mono, monospace">180 DAYS</text>
+        <text x="400" y="130" text-anchor="middle" font-size="10" font-weight="600" font-family="Open Sans, sans-serif">Execute → Orchestrate</text>
+        <text x="400" y="146" text-anchor="middle" font-size="9" fill="#63666a" font-family="Open Sans, sans-serif">Multistep workflows</text>
+
+        <circle cx="580" cy="100" r="10" fill="#046A38"/>
+        <text x="580" y="72" text-anchor="middle" font-size="9" fill="#046A38" font-family="Geist Mono, monospace">12 MONTHS</text>
+        <text x="580" y="130" text-anchor="middle" font-size="10" font-weight="600" font-family="Open Sans, sans-serif">Orchestrate → Optimize</text>
+        <text x="580" y="146" text-anchor="middle" font-size="9" fill="#63666a" font-family="Open Sans, sans-serif">Closed-loop value chains</text>
+
+        <circle cx="820" cy="100" r="12" fill="#000000" stroke="#86BC25" stroke-width="2"/>
+        <text x="820" y="72" text-anchor="middle" font-size="9" fill="#86BC25" font-family="Geist Mono, monospace">YEARS 2–3</text>
+        <text x="820" y="130" text-anchor="middle" font-size="10" font-weight="600" font-family="Open Sans, sans-serif">Self-evolve mesh</text>
+        <text x="820" y="146" text-anchor="middle" font-size="9" fill="#63666a" font-family="Open Sans, sans-serif">Transformational shift</text>
+
+        <rect x="24" y="180" width="852" height="28" rx="6" fill="rgba(134,188,37,0.08)" stroke="#86BC25" stroke-width="0.8"/>
+        <text x="450" y="198" text-anchor="middle" font-size="10" font-family="Open Sans, sans-serif" font-style="italic">Each phase builds unique assets (data, talent, guardrails) that prepare the enterprise for the next leap</text>
+      </svg>
+      <p class="chart-caption">Figure 7 — Phased autonomy journey from overlay pilots to enterprise agent mesh</p>
+    </div>
+  </section>
+
+  <!-- Conclusion -->
+  <section id="conclusion">
+    <h2>Conclusion</h2>
+    <p class="lead">Agentic AI is a <strong>phased transformation</strong> — like the shift from steam to electricity. Organizations that start now will create adaptive operating models that learn, self-optimize, and compound value over time.</p>
+
+    <div class="conclusion-grid">
+      <div class="conclusion-box working">
+        <h3>What early movers gain</h3>
+        <ul>
+          <li>Reclaimed operating costs and near-zero rework</li>
+          <li>Faster time-to-market via agent mesh architectures</li>
+          <li>Talent redeployed to orchestration and oversight</li>
+          <li>Influence over regulations and industry standards</li>
+          <li>Competitive barriers for later entrants</li>
+        </ul>
+      </div>
+      <div class="conclusion-box not-working">
+        <h3>What holds organizations back</h3>
+        <ul>
+          <li>Agents as plug-ins, not operating-model change</li>
+          <li>Autonomy scaling without guardian agents / policy-as-code</li>
+          <li>Fragmented data pipelines agents inherit as weaknesses</li>
+          <li>API-only integration bottlenecks for multi-agent systems</li>
+          <li>Fluency without role redesign and talent pipelines</li>
+          <li>Change management ignoring trust and stagility</li>
+        </ul>
+      </div>
+    </div>
+
+    <h3>Strategic questions for leaders</h3>
+    <table>
+      <thead>
+        <tr><th>Pillar</th><th>Question</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>Strategy</td><td>How can agentic autonomy reinforce core objectives, brand promise, and competitive advantage?</td></tr>
+        <tr><td>Governance</td><td>What controls and oversight mitigate risks from autonomous decisions?</td></tr>
+        <tr><td>Data</td><td>Do we have scalable pipelines and feedback loops to train, monitor, and improve agents?</td></tr>
+        <tr><td>Platform</td><td>Which MCP/A2A/MAS upgrades and orchestration capabilities are critical to scale?</td></tr>
+        <tr><td>Workforce</td><td>How should we reskill and engage talent to thrive alongside increasing autonomy?</td></tr>
+      </tbody>
+    </table>
+
+    <div class="bottom-line">
+      <h3>Bottom line</h3>
+      <p>Treat autonomy as a <strong>staged journey with measurable milestones and cross-functional ownership</strong>. Those who move first — methodically but decisively — are better positioned to capture outsized gains and define the playbook for the agentic enterprise era. Each phase builds the data, talent, and guardrails for the next leap, ensuring autonomy delivers <strong>durable advantage</strong> rather than siloed efficiency gains.</p>
+    </div>
+  </section>
+
+</div>
+
+<footer>
+  <p>Summary derived from Deloitte's <em>Agentic enterprise 2028</em> (September 2025).</p>
+  <p><a href="../../images/agentic-ai-enterprise-2028.pdf">Full report (PDF)</a> · <a href="https://www.deloitte.com/us/AIInstitute">Deloitte AI Institute</a> · <a href="./agentic-ai-enterprise-2028-summary.md">Markdown edition</a></p>
+</footer>
+
+</body>
+</html>
