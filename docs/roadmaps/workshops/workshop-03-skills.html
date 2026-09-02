@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Workshop 3 — Skills Authoring &amp; Contribution</title>
+  <link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300;0,400;0,600;0,700;1,300&family=Geist+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --paper: #ffffff; --paper-2: #e8eae9; --ink: #000000;
+      --muted: #63666a; --soft: #75787b; --rule: rgba(0,0,0,0.12);
+      --accent: #86BC25; --link: #1076A8; --series-2: #1076A8;
+      --font-sans: 'Open Sans', system-ui, sans-serif;
+      --font-mono: 'Geist Mono', ui-monospace, monospace;
+    }
+    body { font-family: var(--font-sans); background: var(--paper-2); color: var(--ink); line-height: 1.6; }
+    .site-header { background: var(--ink); padding: 1.25rem 2rem; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 1rem; }
+    .site-header .logo { height: 28px; }
+    .site-header .meta { font-family: var(--font-mono); font-size: 0.66rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--soft); }
+    .hero { background: var(--paper); border-bottom: 3px solid var(--accent); padding: 2.5rem 2rem; max-width: 1100px; margin: 0 auto; }
+    .hero .eyebrow { font-family: var(--font-mono); font-size: 0.66rem; letter-spacing: 0.18em; text-transform: uppercase; color: var(--accent); margin-bottom: 0.5rem; }
+    .hero h1 { font-size: clamp(1.5rem, 2.5vw, 2.25rem); font-weight: 300; letter-spacing: -0.02em; margin-bottom: 0.5rem; }
+    .hero .sub { font-weight: 300; color: var(--muted); font-style: italic; margin-bottom: 1rem; }
+    .hero a { color: var(--link); text-decoration: none; font-size: 0.875rem; }
+    .hero a:hover { text-decoration: underline; }
+    .container { max-width: 1100px; margin: 0 auto; padding: 2rem; }
+    section { background: var(--paper); border-radius: 8px; padding: 2rem; margin-bottom: 1.5rem; border: 1px solid var(--rule); }
+    h2 { font-size: 1.25rem; font-weight: 300; margin-bottom: 1rem; padding-bottom: 0.4rem; border-bottom: 2px solid var(--accent); display: inline-block; }
+    h3 { font-size: 0.95rem; font-weight: 600; margin: 1.25rem 0 0.5rem; }
+    p { margin-bottom: 0.85rem; }
+    p.lead { font-size: 1.05rem; font-weight: 300; color: var(--muted); }
+    ul { margin: 0 0 1rem 1.25rem; font-size: 0.9rem; }
+    li { margin-bottom: 0.3rem; }
+    table { width: 100%; border-collapse: collapse; font-size: 0.85rem; margin: 1rem 0; }
+    th, td { padding: 0.55rem 0.75rem; text-align: left; border-bottom: 1px solid var(--rule); }
+    th { font-family: var(--font-mono); font-size: 0.65rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--soft); background: rgba(0,0,0,0.02); }
+    .chart-wrap { margin: 1.25rem 0; overflow-x: auto; }
+    .chart-caption { font-family: var(--font-mono); font-size: 0.68rem; color: var(--soft); text-align: center; margin-top: 0.4rem; letter-spacing: 0.06em; }
+    code, pre { font-family: var(--font-mono); font-size: 0.8rem; }
+    pre { background: rgba(0,0,0,0.04); border-radius: 6px; padding: 1rem; overflow-x: auto; margin: 0.75rem 0; }
+    .steps { counter-reset: step; list-style: none; margin: 1rem 0; padding: 0; }
+    .steps li { counter-increment: step; padding: 0.75rem 0 0.75rem 2.5rem; position: relative; border-bottom: 1px solid var(--rule); font-size: 0.9rem; }
+    .steps li::before { content: counter(step); position: absolute; left: 0; top: 0.7rem; width: 1.75rem; height: 1.75rem; background: var(--accent); color: var(--ink); border-radius: 50%; font-family: var(--font-mono); font-size: 0.75rem; font-weight: 600; display: flex; align-items: center; justify-content: center; }
+    footer { max-width: 1100px; margin: 0 auto; padding: 2rem; font-size: 0.8rem; color: var(--soft); text-align: center; }
+    footer a { color: var(--link); }
+  </style>
+</head>
+<body>
+
+<header class="site-header">
+  <img src="../../../images/deloitte.svg" alt="Deloitte" class="logo" width="140" height="28">
+  <span class="meta">Workshop 3 · Skills Authoring</span>
+</header>
+
+<div class="hero">
+  <p class="eyebrow">NL ITS Cloud AI Marketplace · Hands-on</p>
+  <h1>Workshop 3 — Continue with skills</h1>
+  <p class="sub">Authoring SKILL.md, testing in plugins, contribution workflow, and risk tiers</p>
+  <a href="./workshop-03-skills.md">Markdown edition</a> ·
+  <a href="../nl-its-cloud-copilot-marketplace.html">Marketplace guide</a>
+</div>
+
+<div class="container">
+
+  <section>
+    <h2>Agent vs skill vs workflow</h2>
+    <p class="lead">Three primitives with one accountability line — know which surface owns which responsibility.</p>
+
+    <div class="chart-wrap">
+      <svg viewBox="0 0 900 200" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Agent skill workflow comparison">
+        <rect width="100%" height="100%" fill="#ffffff"/>
+        <text x="24" y="22" fill="#75787b" font-size="9" font-family="Geist Mono, monospace" letter-spacing="0.12em">FIGURE 1 — AGENT · SKILL · WORKFLOW</text>
+
+        <rect x="24" y="48" width="260" height="120" rx="8" fill="rgba(134,188,37,0.1)" stroke="#86BC25" stroke-width="1.5"/>
+        <text x="154" y="72" text-anchor="middle" font-size="10" font-weight="600" font-family="Open Sans, sans-serif">Agent</text>
+        <text x="154" y="92" text-anchor="middle" font-size="8" fill="#63666a" font-family="Open Sans, sans-serif">Role + orchestration</text>
+        <text x="154" y="108" text-anchor="middle" font-size="7.5" fill="#63666a" font-family="Geist Mono, monospace">*.agent.md</text>
+        <text x="154" y="128" text-anchor="middle" font-size="8" fill="#63666a" font-family="Open Sans, sans-serif">Defines tool scope + risk tier</text>
+        <text x="154" y="152" text-anchor="middle" font-size="7" fill="#86BC25" font-family="Open Sans, sans-serif" font-style="italic">Decides what to propose</text>
+
+        <rect x="320" y="48" width="260" height="120" rx="8" fill="rgba(134,188,37,0.15)" stroke="#86BC25"/>
+        <text x="450" y="72" text-anchor="middle" font-size="10" font-weight="600" font-family="Open Sans, sans-serif">Skill</text>
+        <text x="450" y="92" text-anchor="middle" font-size="8" fill="#63666a" font-family="Open Sans, sans-serif">How to do one task well</text>
+        <text x="450" y="108" text-anchor="middle" font-size="7.5" fill="#63666a" font-family="Geist Mono, monospace">skills/*/SKILL.md</text>
+        <text x="450" y="128" text-anchor="middle" font-size="8" fill="#63666a" font-family="Open Sans, sans-serif">Loaded on demand by agent</text>
+        <text x="450" y="152" text-anchor="middle" font-size="7" fill="#86BC25" font-family="Open Sans, sans-serif" font-style="italic">Explains how to perform</text>
+
+        <rect x="616" y="48" width="260" height="120" rx="8" fill="rgba(16,118,168,0.08)" stroke="#1076A8"/>
+        <text x="746" y="72" text-anchor="middle" font-size="10" font-weight="600" font-family="Open Sans, sans-serif">Workflow</text>
+        <text x="746" y="92" text-anchor="middle" font-size="8" fill="#63666a" font-family="Open Sans, sans-serif">Deterministic execution</text>
+        <text x="746" y="108" text-anchor="middle" font-size="7.5" fill="#63666a" font-family="Geist Mono, monospace">.github/workflows/*.yml</text>
+        <text x="746" y="128" text-anchor="middle" font-size="8" fill="#63666a" font-family="Open Sans, sans-serif">Approvals + audit trail</text>
+        <text x="746" y="152" text-anchor="middle" font-size="7" fill="#1076A8" font-family="Open Sans, sans-serif" font-style="italic">Validates and performs</text>
+
+        <line x1="284" y1="108" x2="318" y2="108" stroke="#86BC25" stroke-width="1.2"/>
+        <line x1="580" y1="108" x2="614" y2="108" stroke="#1076A8" stroke-width="1.2"/>
+        <text x="450" y="188" text-anchor="middle" font-size="8" fill="#63666a" font-family="Open Sans, sans-serif" font-style="italic">Reusable how-to → skill · Role with boundaries → agent · Production mutation → workflow</text>
+      </svg>
+      <p class="chart-caption">Figure 1 — Agent orchestrates; skill teaches; workflow executes with governance</p>
+    </div>
+
+    <table>
+      <thead><tr><th></th><th>Agent</th><th>Skill</th><th>Workflow</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Format</strong></td><td><code>*.agent.md</code></td><td><code>skills/&lt;name&gt;/SKILL.md</code></td><td><code>.github/workflows/*.yml</code></td></tr>
+        <tr><td><strong>Loaded</strong></td><td>Agent picker</td><td>On demand</td><td>GitHub Actions trigger</td></tr>
+        <tr><td><strong>Risk</strong></td><td>Tool scope + tier</td><td>Procedure; may call scripts</td><td>Enforces approvals</td></tr>
+      </tbody>
+    </table>
+  </section>
+
+  <section>
+    <h2>SKILL.md anatomy</h2>
+    <p class="lead">YAML frontmatter + focused body. Split long content into <code>references/</code> — load lazily.</p>
+
+    <div class="chart-wrap">
+      <svg viewBox="0 0 900 260" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Skill directory structure">
+        <rect width="100%" height="100%" fill="#ffffff"/>
+        <text x="24" y="22" fill="#75787b" font-size="9" font-family="Geist Mono, monospace" letter-spacing="0.12em">FIGURE 2 — SKILL DIRECTORY INSIDE A PLUGIN</text>
+
+        <!-- Plugin root -->
+        <rect x="24" y="44" width="280" height="200" rx="8" fill="rgba(134,188,37,0.04)" stroke="#86BC25"/>
+        <text x="164" y="64" text-anchor="middle" font-size="8" fill="#86BC25" font-family="Geist Mono, monospace">plugins/agentic-infra-ops/</text>
+
+        <text x="44" y="88" font-size="8" font-family="Geist Mono, monospace" fill="#63666a">plugin.json</text>
+        <text x="44" y="108" font-size="8" font-family="Geist Mono, monospace" fill="#63666a">agents/</text>
+        <text x="60" y="124" font-size="7.5" font-family="Geist Mono, monospace" fill="#63666a">infra-delivery-orchestrator.agent.md</text>
+
+        <rect x="44" y="136" width="240" height="96" rx="4" fill="rgba(134,188,37,0.12)" stroke="#86BC25" stroke-width="1.2"/>
+        <text x="56" y="154" font-size="8" font-weight="600" font-family="Geist Mono, monospace">skills/review-terraform-plan/</text>
+        <text x="56" y="172" font-size="8" font-family="Geist Mono, monospace" fill="#86BC25">SKILL.md ← required</text>
+        <text x="56" y="190" font-size="7.5" font-family="Geist Mono, monospace" fill="#63666a">references/standards.md</text>
+        <text x="56" y="206" font-size="7.5" font-family="Geist Mono, monospace" fill="#63666a">scripts/parse-plan.sh</text>
+        <text x="56" y="222" font-size="7" fill="#63666a" font-family="Open Sans, sans-serif">optional helpers</text>
+
+        <!-- SKILL.md structure -->
+        <rect x="340" y="44" width="536" height="200" rx="8" fill="rgba(0,0,0,0.02)" stroke="rgba(0,0,0,0.12)"/>
+        <text x="608" y="64" text-anchor="middle" font-size="8" fill="#75787b" font-family="Geist Mono, monospace">SKILL.MD STRUCTURE</text>
+
+        <rect x="360" y="76" width="496" height="56" rx="4" fill="rgba(16,118,168,0.08)" stroke="#1076A8"/>
+        <text x="376" y="96" font-size="8" font-family="Geist Mono, monospace" fill="#1076A8">--- frontmatter ---</text>
+        <text x="376" y="112" font-size="7.5" font-family="Geist Mono, monospace" fill="#63666a">name · description · metadata.version · risk-tier · owner</text>
+        <text x="376" y="126" font-size="7.5" font-family="Geist Mono, monospace" fill="#63666a">description = when Copilot should load this skill</text>
+
+        <rect x="360" y="144" width="496" height="28" rx="4" fill="rgba(134,188,37,0.1)" stroke="#86BC25"/>
+        <text x="376" y="162" font-size="8" font-family="Open Sans, sans-serif" font-weight="600"># Title · ## When to use · ## Steps (numbered)</text>
+
+        <rect x="360" y="184" width="496" height="28" rx="4" fill="rgba(0,0,0,0.03)" stroke="#75787b" stroke-dasharray="3,2"/>
+        <text x="376" y="202" font-size="8" font-family="Open Sans, sans-serif" fill="#63666a">## References — point to references/*.md (load on demand, not inline)</text>
+
+        <text x="608" y="238" text-anchor="middle" font-size="8" fill="#63666a" font-family="Open Sans, sans-serif" font-style="italic">Keep skills single-purpose · testable steps · explicit triggers</text>
+      </svg>
+      <p class="chart-caption">Figure 2 — Skill lives in plugin skills/ folder; frontmatter drives discovery</p>
+    </div>
+
+    <pre>---
+name: review-terraform-plan
+description: Review Terraform plan output against Deloitte infra standards.
+metadata:
+  version: "0.1"
+  risk-tier: "1"
+  owner: cloud-platform-team
+---
+
+# Review Terraform plan
+
+## When to use
+Use when the user provides terraform plan output.
+
+## Steps
+1. Parse plan for create/update/destroy counts
+2. Check naming and tagging standards
+3. Flag high-risk resources
+4. Output structured review table</pre>
+  </section>
+
+  <section>
+    <h2>Skill lifecycle &amp; contribution</h2>
+    <div class="chart-wrap">
+      <svg viewBox="0 0 900 180" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Skill contribution lifecycle">
+        <defs>
+          <marker id="w3-arr" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto"><polygon points="0 0,8 3,0 6" fill="#86BC25"/></marker>
+        </defs>
+        <rect width="100%" height="100%" fill="#ffffff"/>
+        <text x="24" y="22" fill="#75787b" font-size="9" font-family="Geist Mono, monospace" letter-spacing="0.12em">FIGURE 3 — SKILL CONTRIBUTION LIFECYCLE</text>
+
+        <g font-family="Open Sans, sans-serif">
+          <rect x="24" y="56" width="110" height="48" rx="6" fill="rgba(134,188,37,0.1)" stroke="#86BC25"/>
+          <text x="79" y="76" text-anchor="middle" font-size="9" font-weight="600">Author</text>
+          <text x="79" y="92" text-anchor="middle" font-size="7" fill="#63666a">SKILL.md</text>
+
+          <rect x="154" y="56" width="110" height="48" rx="6" fill="rgba(134,188,37,0.08)" stroke="#86BC25"/>
+          <text x="209" y="76" text-anchor="middle" font-size="9" font-weight="600">Test</text>
+          <text x="209" y="92" text-anchor="middle" font-size="7" fill="#63666a">VS Code</text>
+
+          <rect x="284" y="56" width="110" height="48" rx="6" fill="rgba(16,118,168,0.08)" stroke="#1076A8"/>
+          <text x="339" y="76" text-anchor="middle" font-size="9" font-weight="600">PR</text>
+          <text x="339" y="92" text-anchor="middle" font-size="7" fill="#63666a">marketplace</text>
+
+          <rect x="414" y="56" width="130" height="48" rx="6" fill="rgba(16,118,168,0.1)" stroke="#1076A8"/>
+          <text x="479" y="76" text-anchor="middle" font-size="9" font-weight="600">CODEOWNERS</text>
+          <text x="479" y="92" text-anchor="middle" font-size="7" fill="#63666a">+ security if MCP</text>
+
+          <rect x="564" y="56" width="110" height="48" rx="6" fill="rgba(134,188,37,0.12)" stroke="#86BC25"/>
+          <text x="619" y="76" text-anchor="middle" font-size="9" font-weight="600">Merge</text>
+          <text x="619" y="92" text-anchor="middle" font-size="7" fill="#63666a">version bump</text>
+
+          <rect x="694" y="56" width="110" height="48" rx="6" fill="rgba(134,188,37,0.08)" stroke="#86BC25"/>
+          <text x="749" y="76" text-anchor="middle" font-size="9" font-weight="600">Install</text>
+          <text x="749" y="92" text-anchor="middle" font-size="7" fill="#63666a">team update</text>
+
+          <rect x="824" y="56" width="52" height="48" rx="6" fill="rgba(0,0,0,0.03)" stroke="#75787b" stroke-dasharray="3,2"/>
+          <text x="850" y="84" text-anchor="middle" font-size="8" font-weight="600">Eval</text>
+        </g>
+
+        <line x1="134" y1="80" x2="152" y2="80" stroke="#86BC25" marker-end="url(#w3-arr)"/>
+        <line x1="264" y1="80" x2="282" y2="80" stroke="#86BC25" marker-end="url(#w3-arr)"/>
+        <line x1="394" y1="80" x2="412" y2="80" stroke="#1076A8" marker-end="url(#w3-arr)"/>
+        <line x1="544" y1="80" x2="562" y2="80" stroke="#1076A8" marker-end="url(#w3-arr)"/>
+        <line x1="674" y1="80" x2="692" y2="80" stroke="#86BC25" marker-end="url(#w3-arr)"/>
+        <line x1="804" y1="80" x2="822" y2="80" stroke="#75787b" marker-end="url(#w3-arr)"/>
+
+        <text x="450" y="140" text-anchor="middle" font-size="8" fill="#63666a" font-family="Open Sans, sans-serif">New skill with scripts/MCP → add security reviewer · include eval stub for Phase 2 automation</text>
+
+        <rect x="24" y="152" width="852" height="20" rx="4" fill="rgba(134,188,37,0.05)"/>
+        <text x="450" y="166" text-anchor="middle" font-size="7.5" fill="#63666a" font-family="Geist Mono, monospace">/plugins/agentic-infra-ops/ → @cloud-platform-team · /plugins/diagram-design/ → @cloud-architecture</text>
+      </svg>
+      <p class="chart-caption">Figure 3 — Author → test → PR → review → merge → team install → eval feedback</p>
+    </div>
+
+    <table>
+      <thead><tr><th>Change type</th><th>Reviewer</th></tr></thead>
+      <tbody>
+        <tr><td>Skill improvement</td><td>Skill owner</td></tr>
+        <tr><td>New skill / subagent</td><td>Plugin owner + security (if scripts/MCP)</td></tr>
+        <tr><td>New internal plugin</td><td>AI Platform Owner + Security</td></tr>
+        <tr><td>MCP server addition</td><td>Security (mandatory)</td></tr>
+      </tbody>
+    </table>
+  </section>
+
+  <section>
+    <h2>Risk tiers &amp; agent mapping</h2>
+    <div class="chart-wrap">
+      <svg viewBox="0 0 900 160" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Risk tiers">
+        <rect width="100%" height="100%" fill="#ffffff"/>
+        <text x="24" y="22" fill="#75787b" font-size="9" font-family="Geist Mono, monospace" letter-spacing="0.12em">FIGURE 4 — RISK TIERS FOR SKILLS</text>
+
+        <rect x="24" y="48" width="200" height="56" rx="6" fill="rgba(134,188,37,0.15)" stroke="#86BC25"/>
+        <text x="124" y="72" text-anchor="middle" font-size="9" font-weight="600" font-family="Open Sans, sans-serif">Tier 0–1</text>
+        <text x="124" y="88" text-anchor="middle" font-size="8" fill="#63666a" font-family="Open Sans, sans-serif">Read · draft · suggest</text>
+        <text x="124" y="100" text-anchor="middle" font-size="7" fill="#63666a" font-family="Open Sans, sans-serif">diagram-design · doc outline</text>
+
+        <rect x="244" y="48" width="200" height="56" rx="6" fill="rgba(16,118,168,0.1)" stroke="#1076A8"/>
+        <text x="344" y="72" text-anchor="middle" font-size="9" font-weight="600" font-family="Open Sans, sans-serif">Tier 2</text>
+        <text x="344" y="88" text-anchor="middle" font-size="8" fill="#63666a" font-family="Open Sans, sans-serif">Execute with approval</text>
+        <text x="344" y="100" text-anchor="middle" font-size="7" fill="#63666a" font-family="Open Sans, sans-serif">review-terraform-plan · draft CR</text>
+
+        <rect x="464" y="48" width="200" height="56" rx="6" fill="rgba(0,0,0,0.04)" stroke="#75787b"/>
+        <text x="564" y="72" text-anchor="middle" font-size="9" font-weight="600" font-family="Open Sans, sans-serif">Tier 3+</text>
+        <text x="564" y="88" text-anchor="middle" font-size="8" fill="#63666a" font-family="Open Sans, sans-serif">Human gate mandatory</text>
+        <text x="564" y="100" text-anchor="middle" font-size="7" fill="#63666a" font-family="Open Sans, sans-serif">apply · IAM · production</text>
+
+        <rect x="684" y="48" width="192" height="56" rx="6" fill="#000" stroke="#86BC25"/>
+        <text x="780" y="72" text-anchor="middle" font-size="9" font-weight="600" fill="#86BC25" font-family="Open Sans, sans-serif">Workflow only</text>
+        <text x="780" y="88" text-anchor="middle" font-size="8" fill="#d0d0ce" font-family="Open Sans, sans-serif">GitHub Actions</text>
+        <text x="780" y="100" text-anchor="middle" font-size="7" fill="#d0d0ce" font-family="Open Sans, sans-serif">audit + environments</text>
+
+        <text x="450" y="140" text-anchor="middle" font-size="8" fill="#63666a" font-family="Open Sans, sans-serif" font-style="italic">Document risk-tier in skill frontmatter · bump review path when scripts or MCP are involved</text>
+      </svg>
+      <p class="chart-caption">Figure 4 — Skills cap at suggest/execute-with-approval; production mutation stays in workflows</p>
+    </div>
+
+    <table>
+      <thead><tr><th>Agent</th><th>Example skills</th><th>Tier</th></tr></thead>
+      <tbody>
+        <tr><td><code>infra-delivery-orchestrator</code></td><td><code>review-terraform-plan</code>, <code>draft-change-request</code></td><td>1–2</td></tr>
+        <tr><td><code>documentation-author</code></td><td><code>audience-tone</code>, <code>structure-outline</code></td><td>0–1</td></tr>
+        <tr><td><code>diagram-designer</code></td><td><code>diagram-design</code></td><td>0</td></tr>
+        <tr><td><code>servicenow-intake</code></td><td><code>draft-incident</code>, <code>create-change</code></td><td>1–2</td></tr>
+      </tbody>
+    </table>
+  </section>
+
+  <section>
+    <h2>Hands-on steps</h2>
+    <ol class="steps">
+      <li>Fork <code>nl-its-cloud-ai-marketplace</code> and create branch <code>skill/your-skill-name</code></li>
+      <li>Add <code>plugins/&lt;plugin&gt;/skills/&lt;name&gt;/SKILL.md</code> with frontmatter and numbered steps</li>
+      <li>Install plugin locally and test in Copilot Chat with the owning agent</li>
+      <li>Add eval stub under <code>evals/skills/&lt;name&gt;/</code> (input + expected)</li>
+      <li>Open PR — describe triggers, risk tier, and reviewer path</li>
+      <li>After merge: <code>/plugin marketplace update</code> and <code>/plugin update</code></li>
+    </ol>
+  </section>
+
+  <section>
+    <h2>Exercise</h2>
+    <ul>
+      <li>Study <code>plugins/diagram-design/skills/diagram-design/SKILL.md</code> in this repo as a reference</li>
+      <li>Identify one gap: a sub-procedure that deserves its own skill or <code>references/</code> split</li>
+      <li>Draft frontmatter + When to use + Steps; assign risk tier and owner</li>
+      <li>(Optional) Open a draft PR with an eval stub</li>
+    </ul>
+  </section>
+
+</div>
+
+<footer>
+  <p>Workshop 3 · Part of the <a href="../nl-its-cloud-copilot-marketplace.html">NL ITS Cloud Copilot marketplace</a> enablement series</p>
+  <p>
+    <a href="./workshop-03-skills.md">Markdown edition</a> ·
+    <a href="./workshop-01-agentic-stack.html">Workshop 1</a> ·
+    <a href="./workshop-02-vscode-setup.html">Workshop 2</a>
+  </p>
+</footer>
+
+</body>
+</html>

@@ -5,7 +5,9 @@
 **Date:** 2026-09-01  
 **Basis:** [Agentic enterprise 2028](../reports/agentic-ai-enterprise-2028-summary.md) applied to cloud platform operations, complemented by [State of AI 2026](../reports/state-of-ai-2026-summary.md), aligned with [GitHub-centered agentic IT control plane](../architecture/github-agentic-it-control-plane.md)
 
-**Visual edition:** [it-cloud-team-ai-roadmap.html](./it-cloud-team-ai-roadmap.html)
+**Visual edition:** [it-cloud-team-ai-roadmap.html](./it-cloud-team-ai-roadmap.html)  
+**GitHub Organization implementation:** [NL ITS Cloud Copilot marketplace](./nl-its-cloud-copilot-marketplace.md) — `Deloitte-Netherlands/nl-its-cloud-ai-marketplace`  
+**Merged plan (summary + conclusion + roadmap):** [agentic-enterprise-2028-it-cloud-implementation-plan.md](./agentic-enterprise-2028-it-cloud-implementation-plan.md)
 
 ---
 
@@ -483,8 +485,33 @@ Adopt the blueprint's balanced scorecard — process-level and portfolio-level �
 
 ---
 
-## 11. Related documents
+## 11. GitHub Organization implementation — Copilot marketplace
 
+This roadmap is operationalized for the **Deloitte-Netherlands** GitHub Organization through a central Copilot plugin marketplace. Full guide: [NL ITS Cloud Copilot marketplace](./nl-its-cloud-copilot-marketplace.md).
+
+| Element | Implementation |
+| --- | --- |
+| **Marketplace repo** | `Deloitte-Netherlands/nl-its-cloud-ai-marketplace` |
+| **IDE surface** | VS Code + GitHub Copilot (Copilot Chat, custom agents, skills) |
+| **Distribution model** | Plugins bundle agents, skills, scripts, and MCP — installed per project from the org marketplace |
+| **Launch plugins** | `agentic-infra-ops`, `documentation-writer`, `diagram-design`, `presentation-design`, `servicenow-ops` (+ approved external) |
+| **Team onboarding** | Register marketplace once; install plugins required by each project |
+| **Contributions** | Any team member via PR; CODEOWNERS + security review for MCP and agent changes |
+
+Phase 1 deliverables updated:
+
+| Deliverable | Owner | Pillar |
+| --- | --- | --- |
+| Create **`nl-its-cloud-ai-marketplace`** with 5 launch plugins + external review process | AI Platform Owner | Platform |
+| Publish VS Code onboarding (marketplace register + install) | AI Platform Owner | Workforce |
+| Register marketplace in **Organization settings → Plugins** | AI Platform Owner + Org admin | Governance |
+| Pilot on 2 repos with `enabledPlugins` | Platform lead | Strategy |
+
+---
+
+## 12. Related documents
+
+- [NL ITS Cloud Copilot marketplace — implementation guide](./nl-its-cloud-copilot-marketplace.md)
 - [Agentic enterprise 2028 — summary](../reports/agentic-ai-enterprise-2028-summary.md)
 - [State of AI 2026 — summary](../reports/state-of-ai-2026-summary.md)
 - [GitHub-centered agentic IT control plane](../architecture/github-agentic-it-control-plane.md)
@@ -493,7 +520,7 @@ Adopt the blueprint's balanced scorecard — process-level and portfolio-level �
 
 ---
 
-## 12. Conclusion
+## 13. Conclusion
 
 The Agentic Enterprise 2028 blueprint's lesson for the IT Cloud Team: **treat autonomy as a staged journey, not a plug-in feature**. Each phase builds unique assets — data fabric, talent, guardrails — that prepare the team for the next leap on the autonomy ladder.
 

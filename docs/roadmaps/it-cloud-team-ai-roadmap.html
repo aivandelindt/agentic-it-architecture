@@ -67,6 +67,7 @@
   <h1>IT Cloud Team — agentic AI roadmap</h1>
   <p class="sub">18-month climb from Assist to Optimize on the autonomy ladder</p>
   <a href="./it-cloud-team-ai-roadmap.md">Markdown edition</a> ·
+  <a href="./nl-its-cloud-copilot-marketplace.html">Copilot marketplace</a> ·
   <a href="../reports/agentic-ai-enterprise-2028-summary.html">Agentic Enterprise 2028</a> ·
   <a href="../architecture/github-agentic-it-control-plane.md">Control plane architecture</a>
 </div>
@@ -359,11 +360,29 @@
   </section>
 
   <section>
+    <h2>GitHub Organization — Copilot marketplace</h2>
+    <p class="lead">The roadmap is operationalized for <strong>Deloitte-Netherlands</strong> via <code>nl-its-cloud-ai-marketplace</code> — a central Copilot plugin catalog that every team member registers in VS Code. Projects install only the plugins they need.</p>
+    <table>
+      <thead><tr><th>Launch plugin</th><th>Purpose</th><th>Install when</th></tr></thead>
+      <tbody>
+        <tr><td><strong>agentic-infra-ops</strong></td><td>End-to-end infra delivery with approval gates (requirements → deploy → docs)</td><td>IaC / platform repos</td></tr>
+        <tr><td><strong>documentation-writer</strong></td><td>Deloitte-style docs from codebase / remote workspace</td><td>Any repo needing documentation</td></tr>
+        <tr><td><strong>diagram-design</strong></td><td>40+ diagram types in Deloitte branded style</td><td>Design / architecture repos</td></tr>
+        <tr><td><strong>presentation-design</strong></td><td>Deloitte branded presentations and slide decks</td><td>Deliverables / proposals</td></tr>
+        <tr><td><strong>servicenow-ops</strong></td><td>Change requests, incident drafts, ITSM intake</td><td>ITSM-integrated changes</td></tr>
+      </tbody>
+    </table>
+    <p>Each plugin bundles <strong>agents</strong>, <strong>subagents</strong>, <strong>skills</strong>, <strong>scripts</strong>, and optional <strong>MCP</strong>. External plugins require Deloitte compliance review. Org agents graduate from private testing to org-wide release. <a href="./nl-its-cloud-copilot-marketplace.html">Full marketplace guide →</a></p>
+    <pre style="background:rgba(0,0,0,0.04);border-radius:6px;padding:1rem;font-family:var(--font-mono);font-size:0.8rem;margin:1rem 0;overflow-x:auto">/plugin marketplace add Deloitte-Netherlands/nl-its-cloud-ai-marketplace
+/plugin install agentic-infra-ops@nl-its-cloud-ai-marketplace</pre>
+  </section>
+
+  <section>
     <h2>Conclusion &amp; next steps</h2>
     <p>Treat autonomy as a <strong>staged journey, not a plug-in feature</strong>. Each phase builds data fabric, talent, and guardrails for the next leap. Quick overlay wins (Assist/Suggest) build trust in months 1–4; durable value requires guardian agents, MCP agent-mesh, by-design change flows, and role redesign across all six pillars.</p>
     <div class="cta">
       <h3>Immediate actions</h3>
-      <p>1. Name AI Platform Owner · 2. Charter Agentic CoE · 3. Launch two overlay pilots with RoA baseline · 4. Map sovereign cloud v0 · 5. Review Phase 1 with security and IT leadership</p>
+      <p>1. Create <code>nl-its-cloud-ai-marketplace</code> · 2. Name AI Platform Owner · 3. Charter Agentic CoE · 4. Onboard team in VS Code · 5. Pilot 2 repos with launch plugins · 6. RoA baseline · 7. Review Phase 1 with security</p>
     </div>
   </section>
 

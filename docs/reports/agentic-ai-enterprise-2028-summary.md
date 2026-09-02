@@ -4,7 +4,8 @@
 **Full report:** [../../images/agentic-ai-enterprise-2028.pdf](../../images/agentic-ai-enterprise-2028.pdf)  
 **Visual edition:** [agentic-ai-enterprise-2028-summary.html](./agentic-ai-enterprise-2028-summary.html)  
 **Related:** [State of AI 2026 summary](./state-of-ai-2026-summary.md) · [GitHub agentic IT control plane](../architecture/github-agentic-it-control-plane.md)  
-**Applied roadmap:** [IT Cloud Team Agentic AI roadmap](../roadmaps/it-cloud-team-ai-roadmap.md)
+**Applied roadmap:** [IT Cloud Team Agentic AI roadmap](../roadmaps/it-cloud-team-ai-roadmap.md)  
+**Merged implementation plan:** [Agentic Enterprise 2028 — IT Cloud implementation plan](../roadmaps/agentic-enterprise-2028-it-cloud-implementation-plan.md)
 
 ---
 

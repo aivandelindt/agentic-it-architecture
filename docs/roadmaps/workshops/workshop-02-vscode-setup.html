@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Workshop 2 — VS Code &amp; Copilot Marketplace Setup</title>
+  <link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300;0,400;0,600;0,700;1,300&family=Geist+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --paper: #ffffff; --paper-2: #e8eae9; --ink: #000000;
+      --muted: #63666a; --soft: #75787b; --rule: rgba(0,0,0,0.12);
+      --accent: #86BC25; --accent-tint: rgba(134,188,37,0.08);
+      --link: #1076A8; --series-2: #1076A8;
+      --font-sans: 'Open Sans', system-ui, sans-serif;
+      --font-mono: 'Geist Mono', ui-monospace, monospace;
+    }
+    body { font-family: var(--font-sans); background: var(--paper-2); color: var(--ink); line-height: 1.6; }
+    .site-header { background: var(--ink); padding: 1.25rem 2rem; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 1rem; }
+    .site-header .logo { height: 28px; }
+    .site-header .meta { font-family: var(--font-mono); font-size: 0.66rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--soft); }
+    .hero { background: var(--paper); border-bottom: 3px solid var(--accent); padding: 2.5rem 2rem; max-width: 1100px; margin: 0 auto; }
+    .hero .eyebrow { font-family: var(--font-mono); font-size: 0.66rem; letter-spacing: 0.18em; text-transform: uppercase; color: var(--accent); margin-bottom: 0.5rem; }
+    .hero h1 { font-size: clamp(1.5rem, 2.5vw, 2.25rem); font-weight: 300; letter-spacing: -0.02em; margin-bottom: 0.5rem; }
+    .hero .sub { font-weight: 300; color: var(--muted); font-style: italic; margin-bottom: 1rem; }
+    .hero a { color: var(--link); text-decoration: none; font-size: 0.875rem; }
+    .hero a:hover { text-decoration: underline; }
+    .container { max-width: 1100px; margin: 0 auto; padding: 2rem; }
+    section { background: var(--paper); border-radius: 8px; padding: 2rem; margin-bottom: 1.5rem; border: 1px solid var(--rule); }
+    h2 { font-size: 1.25rem; font-weight: 300; margin-bottom: 1rem; padding-bottom: 0.4rem; border-bottom: 2px solid var(--accent); display: inline-block; }
+    h3 { font-size: 0.95rem; font-weight: 600; margin: 1.25rem 0 0.5rem; }
+    p { margin-bottom: 0.85rem; }
+    p.lead { font-size: 1.05rem; font-weight: 300; color: var(--muted); }
+    ul { margin: 0 0 1rem 1.25rem; font-size: 0.9rem; }
+    li { margin-bottom: 0.3rem; }
+    table { width: 100%; border-collapse: collapse; font-size: 0.85rem; margin: 1rem 0; }
+    th, td { padding: 0.55rem 0.75rem; text-align: left; border-bottom: 1px solid var(--rule); }
+    th { font-family: var(--font-mono); font-size: 0.65rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--soft); background: rgba(0,0,0,0.02); }
+    .chart-wrap { margin: 1.25rem 0; overflow-x: auto; }
+    .chart-caption { font-family: var(--font-mono); font-size: 0.68rem; color: var(--soft); text-align: center; margin-top: 0.4rem; letter-spacing: 0.06em; }
+    code, pre { font-family: var(--font-mono); font-size: 0.8rem; }
+    pre { background: rgba(0,0,0,0.04); border-radius: 6px; padding: 1rem; overflow-x: auto; margin: 0.75rem 0; }
+    .steps { counter-reset: step; list-style: none; margin: 1rem 0; padding: 0; }
+    .steps li { counter-increment: step; padding: 0.75rem 0 0.75rem 2.5rem; position: relative; border-bottom: 1px solid var(--rule); font-size: 0.9rem; }
+    .steps li::before { content: counter(step); position: absolute; left: 0; top: 0.7rem; width: 1.75rem; height: 1.75rem; background: var(--accent); color: var(--ink); border-radius: 50%; font-family: var(--font-mono); font-size: 0.75rem; font-weight: 600; display: flex; align-items: center; justify-content: center; }
+    .comp-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 0.75rem; margin: 1rem 0; }
+    .comp { padding: 0.85rem; border-radius: 6px; border: 1px solid var(--rule); font-size: 0.82rem; text-align: center; }
+    .comp strong { display: block; margin-bottom: 0.25rem; font-size: 0.85rem; }
+    .comp.agents { background: rgba(134,188,37,0.12); border-color: var(--accent); }
+    .comp.skills { background: rgba(134,188,37,0.08); border-color: var(--accent); }
+    .comp.hooks { background: rgba(16,118,168,0.08); border-color: var(--series-2); }
+    .comp.mcp { background: rgba(16,118,168,0.12); border-color: var(--series-2); }
+    .comp.lsp { background: rgba(0,0,0,0.03); border-color: var(--soft); }
+    footer { max-width: 1100px; margin: 0 auto; padding: 2rem; font-size: 0.8rem; color: var(--soft); text-align: center; }
+    footer a { color: var(--link); }
+  </style>
+</head>
+<body>
+
+<header class="site-header">
+  <img src="../../../images/deloitte.svg" alt="Deloitte" class="logo" width="140" height="28">
+  <span class="meta">Workshop 2 · VS Code + Copilot Marketplace</span>
+</header>
+
+<div class="hero">
+  <p class="eyebrow">NL ITS Cloud AI Marketplace · Hands-on</p>
+  <h1>Workshop 2 — VS Code setup with GitHub Copilot</h1>
+  <p class="sub">Plugins, marketplaces, and registering Deloitte-Netherlands/nl-its-cloud-ai-marketplace</p>
+  <a href="./workshop-02-vscode-setup.md">Markdown edition</a> ·
+  <a href="../nl-its-cloud-copilot-marketplace.html">Marketplace guide</a>
+</div>
+
+<div class="container">
+
+  <section>
+    <h2>What is a GitHub Copilot plugin?</h2>
+    <p class="lead">A plugin is a <strong>distributable package</strong> that extends Copilot with agents, skills, hooks, and integrations — bundled in a single installable unit for VS Code, Copilot CLI, and cloud agent.</p>
+
+    <div class="chart-wrap">
+      <svg viewBox="0 0 900 280" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Plugin component anatomy">
+        <rect width="100%" height="100%" fill="#ffffff"/>
+        <text x="24" y="22" fill="#75787b" font-size="9" font-family="Geist Mono, monospace" letter-spacing="0.12em">PLUGIN ANATOMY — WHAT A PLUGIN CONTAINS</text>
+
+        <!-- Central plugin box -->
+        <rect x="340" y="44" width="220" height="48" rx="8" fill="rgba(134,188,37,0.15)" stroke="#86BC25" stroke-width="1.5"/>
+        <text x="450" y="64" text-anchor="middle" font-size="9" fill="#86BC25" font-family="Geist Mono, monospace" letter-spacing="0.1em">PLUGIN</text>
+        <text x="450" y="80" text-anchor="middle" font-size="11" font-weight="600" font-family="Open Sans, sans-serif">plugin.json manifest</text>
+
+        <!-- Components radiating out -->
+        <rect x="24" y="120" width="150" height="56" rx="6" fill="rgba(134,188,37,0.12)" stroke="#86BC25"/>
+        <text x="99" y="142" text-anchor="middle" font-size="10" font-weight="600" font-family="Open Sans, sans-serif">Custom agents</text>
+        <text x="99" y="158" text-anchor="middle" font-size="8" fill="#63666a" font-family="Geist Mono, monospace">agents/*.agent.md</text>
+        <line x1="174" y1="148" x2="338" y2="80" stroke="#86BC25" stroke-width="1"/>
+
+        <rect x="204" y="200" width="150" height="56" rx="6" fill="rgba(134,188,37,0.1)" stroke="#86BC25"/>
+        <text x="279" y="222" text-anchor="middle" font-size="10" font-weight="600" font-family="Open Sans, sans-serif">Skills</text>
+        <text x="279" y="238" text-anchor="middle" font-size="8" fill="#63666a" font-family="Geist Mono, monospace">skills/*/SKILL.md</text>
+        <line x1="330" y1="228" x2="400" y2="92" stroke="#86BC25" stroke-width="1"/>
+
+        <rect x="384" y="200" width="132" height="56" rx="6" fill="rgba(16,118,168,0.1)" stroke="#1076A8"/>
+        <text x="450" y="222" text-anchor="middle" font-size="10" font-weight="600" font-family="Open Sans, sans-serif">Hooks</text>
+        <text x="450" y="238" text-anchor="middle" font-size="8" fill="#63666a" font-family="Geist Mono, monospace">hooks.json</text>
+        <line x1="450" y1="200" x2="450" y2="92" stroke="#1076A8" stroke-width="1"/>
+
+        <rect x="546" y="200" width="150" height="56" rx="6" fill="rgba(16,118,168,0.12)" stroke="#1076A8"/>
+        <text x="621" y="222" text-anchor="middle" font-size="10" font-weight="600" font-family="Open Sans, sans-serif">MCP config</text>
+        <text x="621" y="238" text-anchor="middle" font-size="8" fill="#63666a" font-family="Geist Mono, monospace">.mcp.json</text>
+        <line x1="570" y1="228" x2="500" y2="92" stroke="#1076A8" stroke-width="1"/>
+
+        <rect x="726" y="120" width="150" height="56" rx="6" fill="rgba(0,0,0,0.04)" stroke="#75787b"/>
+        <text x="801" y="142" text-anchor="middle" font-size="10" font-weight="600" font-family="Open Sans, sans-serif">LSP config</text>
+        <text x="801" y="158" text-anchor="middle" font-size="8" fill="#63666a" font-family="Geist Mono, monospace">lsp.json</text>
+        <line x1="726" y1="148" x2="562" y2="80" stroke="#75787b" stroke-width="1"/>
+
+        <text x="450" y="272" text-anchor="middle" font-size="8" fill="#63666a" font-family="Open Sans, sans-serif" font-style="italic">All optional except plugin.json — install only what the plugin needs</text>
+      </svg>
+      <p class="chart-caption">Figure 1 — Plugin components bundled in one installable unit</p>
+    </div>
+
+    <h3>Directory structure</h3>
+    <pre>nl-its-cloud-ai-plugin/
+├── plugin.json           # Required manifest
+├── agents/               # Custom agents (optional)
+│   └── helper.agent.md
+├── skills/               # Skills (optional)
+│   └── deploy/SKILL.md
+├── hooks.json            # Hook configuration (optional)
+├── .mcp.json             # MCP server config (optional)
+└── lsp.json              # LSP server config (optional)</pre>
+  </section>
+
+  <section>
+    <h2>Why plugins vs manual configuration?</h2>
+    <table>
+      <thead><tr><th>Feature</th><th>Manual configuration</th><th>Plugin</th></tr></thead>
+      <tbody>
+        <tr><td>Scope</td><td>Single repository</td><td>Any project</td></tr>
+        <tr><td>Sharing</td><td>Manual copy/paste</td><td>Install command or <code>enabledPlugins</code></td></tr>
+        <tr><td>Versioning</td><td>Git history</td><td>Marketplace versions</td></tr>
+        <tr><td>Discovery</td><td>Searching repositories</td><td>Marketplace browsing</td></tr>
+      </tbody>
+    </table>
+    <ul>
+      <li><strong>Reusability</strong> across projects</li>
+      <li><strong>Team standardization</strong> of Copilot configuration</li>
+      <li><strong>Domain expertise</strong> — Terraform, diagrams, ServiceNow, Deloitte style</li>
+      <li><strong>Encapsulate</strong> complex MCP server setups</li>
+    </ul>
+  </section>
+
+  <section>
+    <h2>How marketplaces work</h2>
+    <p class="lead">A marketplace is a registry of versioned plugins — our sanctioned catalog is <code>Deloitte-Netherlands/nl-its-cloud-ai-marketplace</code>, defined by <code>marketplace.json</code>.</p>
+
+    <div class="chart-wrap">
+      <svg viewBox="0 0 900 240" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Marketplace to VS Code flow">
+        <defs>
+          <marker id="ws-arr" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto"><polygon points="0 0,8 3,0 6" fill="#63666a"/></marker>
+          <marker id="ws-arr-g" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto"><polygon points="0 0,8 3,0 6" fill="#86BC25"/></marker>
+        </defs>
+        <rect width="100%" height="100%" fill="#ffffff"/>
+        <text x="24" y="22" fill="#75787b" font-size="9" font-family="Geist Mono, monospace" letter-spacing="0.12em">MARKETPLACE → VS CODE INSTALL FLOW</text>
+
+        <!-- GitHub org -->
+        <rect x="24" y="48" width="240" height="120" rx="8" fill="rgba(134,188,37,0.06)" stroke="#86BC25"/>
+        <text x="144" y="68" text-anchor="middle" font-size="8" fill="#86BC25" font-family="Geist Mono, monospace">GITHUB · Deloitte-Netherlands</text>
+        <rect x="44" y="80" width="200" height="32" rx="4" fill="#fff" stroke="#86BC25" stroke-width="1.2"/>
+        <text x="144" y="100" text-anchor="middle" font-size="9" font-weight="600" font-family="Open Sans, sans-serif">nl-its-cloud-ai-marketplace</text>
+        <text x="144" y="118" text-anchor="middle" font-size="7" fill="#63666a" font-family="Geist Mono, monospace">marketplace.json</text>
+        <rect x="44" y="122" width="92" height="22" rx="3" fill="rgba(134,188,37,0.12)" stroke="#86BC25"/>
+        <text x="90" y="136" text-anchor="middle" font-size="7" font-family="Open Sans, sans-serif">infra-ops</text>
+        <rect x="144" y="122" width="100" height="22" rx="3" fill="rgba(134,188,37,0.12)" stroke="#86BC25"/>
+        <text x="194" y="136" text-anchor="middle" font-size="7" font-family="Open Sans, sans-serif">diagram-design</text>
+        <text x="144" y="158" text-anchor="middle" font-size="7" fill="#63666a" font-family="Open Sans, sans-serif">+ 3 more plugins · versioned</text>
+
+        <line x1="264" y1="108" x2="304" y2="108" stroke="#86BC25" stroke-width="1.4" marker-end="url(#ws-arr-g)"/>
+        <text x="284" y="100" text-anchor="middle" font-size="7" fill="#63666a" font-family="Geist Mono, monospace">register</text>
+
+        <!-- VS Code -->
+        <rect x="312" y="48" width="200" height="120" rx="8" fill="rgba(16,118,168,0.06)" stroke="#1076A8"/>
+        <text x="412" y="68" text-anchor="middle" font-size="8" fill="#1076A8" font-family="Geist Mono, monospace">VS CODE + COPILOT CHAT</text>
+        <text x="412" y="92" text-anchor="middle" font-size="8" font-family="Geist Mono, monospace">/plugin marketplace add …</text>
+        <text x="412" y="108" text-anchor="middle" font-size="8" font-family="Geist Mono, monospace">/plugin install …</text>
+        <rect x="332" y="118" width="160" height="28" rx="4" fill="#fff" stroke="rgba(0,0,0,0.12)"/>
+        <text x="412" y="136" text-anchor="middle" font-size="8" font-family="Open Sans, sans-serif">Agents · skills · MCP loaded</text>
+
+        <line x1="512" y1="108" x2="552" y2="108" stroke="#63666a" marker-end="url(#ws-arr)"/>
+        <text x="532" y="100" text-anchor="middle" font-size="7" fill="#63666a" font-family="Geist Mono, monospace">per project</text>
+
+        <!-- Project repo -->
+        <rect x="560" y="48" width="200" height="120" rx="8" fill="rgba(0,0,0,0.02)" stroke="rgba(0,0,0,0.12)"/>
+        <text x="660" y="68" text-anchor="middle" font-size="8" fill="#75787b" font-family="Geist Mono, monospace">PROJECT REPOSITORY</text>
+        <text x="660" y="92" text-anchor="middle" font-size="8" font-family="Geist Mono, monospace">.github/copilot/settings.json</text>
+        <text x="660" y="108" text-anchor="middle" font-size="8" font-family="Open Sans, sans-serif">enabledPlugins</text>
+        <text x="660" y="124" text-anchor="middle" font-size="8" fill="#63666a" font-family="Open Sans, sans-serif">Team uses same plugin set</text>
+        <text x="660" y="140" text-anchor="middle" font-size="8" fill="#63666a" font-family="Open Sans, sans-serif">README documents install</text>
+
+        <!-- Install sources row -->
+        <text x="24" y="188" font-size="8" fill="#75787b" font-family="Geist Mono, monospace" letter-spacing="0.08em">INSTALL FROM</text>
+        <rect x="24" y="196" width="160" height="32" rx="4" fill="rgba(134,188,37,0.1)" stroke="#86BC25"/>
+        <text x="104" y="216" text-anchor="middle" font-size="8" font-weight="600" font-family="Open Sans, sans-serif">Org marketplace (sanctioned)</text>
+        <rect x="200" y="196" width="140" height="32" rx="4" fill="rgba(0,0,0,0.03)" stroke="#75787b" stroke-dasharray="3,2"/>
+        <text x="270" y="216" text-anchor="middle" font-size="8" fill="#63666a" font-family="Open Sans, sans-serif">Approved external mirror</text>
+        <rect x="356" y="196" width="120" height="32" rx="4" fill="rgba(0,0,0,0.02)" stroke="#75787b" stroke-dasharray="3,2"/>
+        <text x="416" y="216" text-anchor="middle" font-size="8" fill="#63666a" font-family="Open Sans, sans-serif">Local path (dev only)</text>
+      </svg>
+      <p class="chart-caption">Figure 2 — Register marketplace once in VS Code; install plugins per project; declare in repo settings</p>
+    </div>
+  </section>
+
+  <section>
+    <h2>Hands-on — VS Code setup</h2>
+    <ol class="steps">
+      <li>Confirm <strong>GitHub Copilot</strong> license and install <strong>Copilot + Copilot Chat</strong> extensions in VS Code.</li>
+      <li>Register the org marketplace in Copilot Chat:<br><code>/plugin marketplace add Deloitte-Netherlands/nl-its-cloud-ai-marketplace</code></li>
+      <li>Verify: <code>/plugin marketplace list</code> — should show <code>nl-its-cloud-ai-marketplace</code>.</li>
+      <li>Install a plugin for your project:<br><code>/plugin install diagram-design@nl-its-cloud-ai-marketplace</code></li>
+      <li>Open agent picker — confirm plugin agents appear (e.g. <code>diagram-designer</code>).</li>
+      <li>Add <code>enabledPlugins</code> to your repo's <code>.github/copilot/settings.json</code>.</li>
+      <li>Update after marketplace merges: <code>/plugin marketplace update nl-its-cloud-ai-marketplace</code></li>
+    </ol>
+
+    <h3>CLI alternative</h3>
+    <pre>copilot plugin marketplace add Deloitte-Netherlands/nl-its-cloud-ai-marketplace
+copilot plugin install agentic-infra-ops@nl-its-cloud-ai-marketplace</pre>
+
+    <h3>Repository settings example</h3>
+    <pre>{
+  "enabledPlugins": {
+    "agentic-infra-ops@nl-its-cloud-ai-marketplace": true,
+    "servicenow-ops@nl-its-cloud-ai-marketplace": true
+  },
+  "extraKnownMarketplaces": {
+    "nl-its-cloud-ai-marketplace": {
+      "source": { "source": "github", "repo": "Deloitte-Netherlands/nl-its-cloud-ai-marketplace" }
+    }
+  }
+}</pre>
+  </section>
+
+  <section>
+    <h2>Install paths by client</h2>
+    <div class="chart-wrap">
+      <svg viewBox="0 0 900 160" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Install paths by Copilot client">
+        <rect width="100%" height="100%" fill="#ffffff"/>
+        <text x="24" y="22" fill="#75787b" font-size="9" font-family="Geist Mono, monospace" letter-spacing="0.12em">HOW YOU INSTALL — BY CLIENT</text>
+
+        <rect x="24" y="44" width="200" height="88" rx="6" fill="rgba(134,188,37,0.12)" stroke="#86BC25" stroke-width="1.5"/>
+        <text x="124" y="64" text-anchor="middle" font-size="9" font-weight="600" font-family="Open Sans, sans-serif">VS Code / Copilot Chat</text>
+        <text x="124" y="82" text-anchor="middle" font-size="8" fill="#63666a" font-family="Geist Mono, monospace">/plugin marketplace add</text>
+        <text x="124" y="96" text-anchor="middle" font-size="8" fill="#63666a" font-family="Geist Mono, monospace">/plugin install</text>
+        <text x="124" y="118" text-anchor="middle" font-size="7" fill="#86BC25" font-family="Open Sans, sans-serif" font-style="italic">This workshop focus</text>
+
+        <rect x="244" y="44" width="200" height="88" rx="6" fill="rgba(16,118,168,0.08)" stroke="#1076A8"/>
+        <text x="344" y="64" text-anchor="middle" font-size="9" font-weight="600" font-family="Open Sans, sans-serif">Copilot CLI</text>
+        <text x="344" y="82" text-anchor="middle" font-size="8" fill="#63666a" font-family="Geist Mono, monospace">copilot plugin marketplace add</text>
+        <text x="344" y="96" text-anchor="middle" font-size="8" fill="#63666a" font-family="Geist Mono, monospace">copilot plugin install</text>
+
+        <rect x="464" y="44" width="200" height="88" rx="6" fill="rgba(16,118,168,0.06)" stroke="#1076A8"/>
+        <text x="564" y="64" text-anchor="middle" font-size="9" font-weight="600" font-family="Open Sans, sans-serif">Copilot cloud agent</text>
+        <text x="564" y="82" text-anchor="middle" font-size="8" fill="#63666a" font-family="Open Sans, sans-serif">Declarative only</text>
+        <text x="564" y="96" text-anchor="middle" font-size="7.5" fill="#63666a" font-family="Geist Mono, monospace">enabledPlugins in</text>
+        <text x="564" y="108" text-anchor="middle" font-size="7.5" fill="#63666a" font-family="Geist Mono, monospace">.github/copilot/settings.json</text>
+
+        <rect x="684" y="44" width="192" height="88" rx="6" fill="rgba(0,0,0,0.03)" stroke="#75787b"/>
+        <text x="780" y="64" text-anchor="middle" font-size="9" font-weight="600" font-family="Open Sans, sans-serif">GitHub Copilot app</text>
+        <text x="780" y="82" text-anchor="middle" font-size="8" fill="#63666a" font-family="Open Sans, sans-serif">Customize → Plugins</text>
+        <text x="780" y="96" text-anchor="middle" font-size="8" fill="#63666a" font-family="Open Sans, sans-serif">Browse marketplaces</text>
+      </svg>
+      <p class="chart-caption">Figure 3 — Install mechanism varies by client; marketplace + plugin names stay consistent</p>
+    </div>
+  </section>
+
+  <section>
+    <h2>Exercise</h2>
+    <ul>
+      <li>Register <code>nl-its-cloud-ai-marketplace</code> in your VS Code</li>
+      <li>Install <code>diagram-design@nl-its-cloud-ai-marketplace</code></li>
+      <li>Use the plugin agent to create a simple architecture diagram</li>
+      <li>Add <code>enabledPlugins</code> to a test repo and open a PR</li>
+    </ul>
+  </section>
+
+</div>
+
+<footer>
+  <p>Workshop 2 · Part of the <a href="../nl-its-cloud-copilot-marketplace.html">NL ITS Cloud Copilot marketplace</a> enablement series</p>
+  <p><a href="./workshop-02-vscode-setup.md">Markdown edition</a> · <a href="./workshop-01-agentic-stack.html">Workshop 1</a> · <a href="./workshop-03-skills.html">Workshop 3</a> · <a href="../nl-its-cloud-copilot-marketplace.html">Workshop series overview</a></p>
+</footer>
+
+</body>
+</html>

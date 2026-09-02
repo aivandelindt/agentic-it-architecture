@@ -1,0 +1,759 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>NL ITS Cloud — Copilot Marketplace</title>
+  <link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300;0,400;0,600;0,700;1,300&family=Geist+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --paper: #ffffff; --paper-2: #e8eae9; --ink: #000000;
+      --muted: #63666a; --soft: #75787b; --rule: rgba(0,0,0,0.12);
+      --accent: #86BC25; --accent-tint: rgba(134,188,37,0.08);
+      --link: #1076A8; --series-2: #1076A8; --series-4: #046A38;
+      --font-sans: 'Open Sans', system-ui, sans-serif;
+      --font-mono: 'Geist Mono', ui-monospace, monospace;
+    }
+    body { font-family: var(--font-sans); background: var(--paper-2); color: var(--ink); line-height: 1.6; }
+    .site-header { background: var(--ink); padding: 1.25rem 2rem; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 1rem; }
+    .site-header .logo { height: 28px; }
+    .site-header .meta { font-family: var(--font-mono); font-size: 0.66rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--soft); }
+    .hero { background: var(--paper); border-bottom: 3px solid var(--accent); padding: 2.5rem 2rem; max-width: 1100px; margin: 0 auto; }
+    .hero .eyebrow { font-family: var(--font-mono); font-size: 0.66rem; letter-spacing: 0.18em; text-transform: uppercase; color: var(--accent); margin-bottom: 0.5rem; }
+    .hero h1 { font-size: clamp(1.5rem, 2.5vw, 2.25rem); font-weight: 300; letter-spacing: -0.02em; margin-bottom: 0.5rem; }
+    .hero .sub { font-weight: 300; color: var(--muted); font-style: italic; margin-bottom: 1rem; }
+    .hero a { color: var(--link); text-decoration: none; font-size: 0.875rem; }
+    .hero a:hover { text-decoration: underline; }
+    .container { max-width: 1100px; margin: 0 auto; padding: 2rem; }
+    section { background: var(--paper); border-radius: 8px; padding: 2rem; margin-bottom: 1.5rem; border: 1px solid var(--rule); }
+    h2 { font-size: 1.25rem; font-weight: 300; margin-bottom: 1rem; padding-bottom: 0.4rem; border-bottom: 2px solid var(--accent); display: inline-block; }
+    h3 { font-size: 0.95rem; font-weight: 600; margin: 1.25rem 0 0.5rem; }
+    p { margin-bottom: 0.85rem; }
+    p.lead { font-size: 1.05rem; font-weight: 300; color: var(--muted); }
+    table { width: 100%; border-collapse: collapse; font-size: 0.85rem; margin: 1rem 0; }
+    th, td { padding: 0.55rem 0.75rem; text-align: left; border-bottom: 1px solid var(--rule); }
+    th { font-family: var(--font-mono); font-size: 0.65rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--soft); background: rgba(0,0,0,0.02); }
+    .chart-wrap { margin: 1.25rem 0; overflow-x: auto; }
+    .chart-caption { font-family: var(--font-mono); font-size: 0.68rem; color: var(--soft); text-align: center; margin-top: 0.4rem; letter-spacing: 0.06em; }
+    .plugin-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 1rem; margin: 1rem 0; }
+    .plugin-card { border-radius: 8px; padding: 1.25rem; border: 1px solid var(--rule); }
+    .plugin-card.primary { background: var(--accent-tint); border-color: var(--accent); }
+    .plugin-card.wide { grid-column: 1 / -1; }
+    .plugin-card .tag { font-family: var(--font-mono); font-size: 0.65rem; color: var(--accent); letter-spacing: 0.1em; text-transform: uppercase; }
+    .plugin-card h3 { margin: 0.35rem 0 0.25rem; font-size: 1rem; }
+    .plugin-card .desc { font-size: 0.85rem; color: var(--muted); margin-bottom: 0.5rem; }
+    .plugin-card ul { margin: 0 0 0 1rem; font-size: 0.82rem; }
+    .steps { counter-reset: step; list-style: none; margin: 1rem 0; padding: 0; }
+    .steps li { counter-increment: step; padding: 0.75rem 0 0.75rem 2.5rem; position: relative; border-bottom: 1px solid var(--rule); font-size: 0.9rem; }
+    .steps li::before { content: counter(step); position: absolute; left: 0; top: 0.7rem; width: 1.75rem; height: 1.75rem; background: var(--accent); color: var(--ink); border-radius: 50%; font-family: var(--font-mono); font-size: 0.75rem; font-weight: 600; display: flex; align-items: center; justify-content: center; }
+    code, pre { font-family: var(--font-mono); font-size: 0.8rem; }
+    pre { background: rgba(0,0,0,0.04); border-radius: 6px; padding: 1rem; overflow-x: auto; margin: 0.75rem 0; }
+    .cta { background: var(--ink); color: var(--paper); border-radius: 8px; padding: 1.25rem 1.5rem; margin-top: 1rem; }
+    .cta h3 { color: var(--accent); font-family: var(--font-mono); font-size: 0.7rem; letter-spacing: 0.14em; text-transform: uppercase; margin: 0 0 0.5rem; }
+    .cta p { margin: 0; font-weight: 300; }
+    .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; }
+    @media (max-width: 700px) { .two-col { grid-template-columns: 1fr; } }
+    footer { max-width: 1100px; margin: 0 auto; padding: 2rem; font-size: 0.8rem; color: var(--soft); text-align: center; }
+    footer a { color: var(--link); }
+  </style>
+</head>
+<body>
+
+<header class="site-header">
+  <img src="../../images/deloitte.svg" alt="Deloitte" class="logo" width="140" height="28">
+  <span class="meta">Deloitte-Netherlands · Copilot Marketplace · Sep 2026</span>
+</header>
+
+<div class="hero">
+  <p class="eyebrow">IT Cloud Team roadmap — GitHub Organization implementation</p>
+  <h1>NL ITS Cloud — Copilot marketplace</h1>
+  <p class="sub">Internal plugins + Deloitte-compliant external catalog · VS Code + GitHub Copilot</p>
+  <a href="./nl-its-cloud-copilot-marketplace.md">Markdown edition</a> ·
+  <a href="./it-cloud-team-ai-roadmap.html">IT Cloud roadmap</a> ·
+  <a href="./workshops/workshop-01-agentic-stack.html">Workshop 1 — Agentic stack</a> ·
+  <a href="./workshops/workshop-02-vscode-setup.html">Workshop 2 — VS Code setup</a> ·
+  <a href="./workshops/workshop-03-skills.html">Workshop 3 — Skills</a> ·
+  <a href="../architecture/github-agentic-it-control-plane.md">Control plane</a>
+</div>
+
+<div class="container">
+
+  <section>
+    <h2>Operating model</h2>
+    <p class="lead">One sanctioned marketplace in <strong>Deloitte-Netherlands</strong>. Team members register it in VS Code once. Projects install only the plugins they need. The catalog includes <strong>five internal plugins</strong> plus <strong>approved external plugins</strong> that pass Deloitte compliance review.</p>
+    <p>Plugins bundle agents, subagents, skills, scripts, and MCP. Org-level custom agents graduate from private testing in <code>.github-private</code> to org-wide release after security and CoE approval.</p>
+  </section>
+
+  <section>
+    <h2>Internal plugin portfolio</h2>
+    <div class="plugin-grid">
+
+      <div class="plugin-card primary wide">
+        <div class="tag">Plugin 1 — orchestrated delivery</div>
+        <h3>agentic-infra-ops</h3>
+        <p class="desc">End-to-end infrastructure delivery with human approval gates at every stage.</p>
+        <div class="two-col">
+          <div>
+            <h3>Orchestrator + subagents</h3>
+            <ul>
+              <li><code>infra-delivery-orchestrator</code> — routes stages, enforces gates</li>
+              <li><code>requirements-analyst</code> · <code>architecture-designer</code> · <code>solution-designer</code></li>
+              <li><code>governance-reviewer</code> — guardrails, policies, risk tier</li>
+              <li><code>iac-planner</code> · <code>iac-developer</code> · <code>deployment-coordinator</code></li>
+              <li><code>documentation-author</code> — as-built, runbooks</li>
+            </ul>
+          </div>
+          <div>
+            <h3>Skills &amp; tools</h3>
+            <ul>
+              <li>Skills per stage: gather-requirements, draft-architecture, plan-terraform, author-terraform, …</li>
+              <li>Scripts: parse-plan, policy-check, module-scaffold</li>
+              <li>MCP (Phase 3+): service-catalog-read, cost-estimate-read</li>
+              <li>No direct <code>terraform apply</code> — deploy via gated GitHub Actions</li>
+            </ul>
+          </div>
+        </div>
+        <div class="chart-wrap" style="margin-top:1rem">
+          <svg viewBox="0 0 960 560" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="agentic-infra-ops delivery flow with approval gates">
+            <defs>
+              <marker id="gate-arr" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto"><polygon points="0 0,8 3,0 6" fill="#63666a"/></marker>
+              <marker id="gate-arr-g" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto"><polygon points="0 0,8 3,0 6" fill="#86BC25"/></marker>
+            </defs>
+            <rect width="100%" height="100%" fill="#ffffff"/>
+            <text x="24" y="22" fill="#75787b" font-size="9" font-family="Geist Mono, monospace" letter-spacing="0.12em">AGENTIC-INFRA-OPS — STAGED DELIVERY WITH APPROVAL GATES</text>
+
+            <!-- Legend -->
+            <rect x="24" y="34" width="14" height="14" rx="2" fill="rgba(134,188,37,0.2)" stroke="#86BC25"/>
+            <text x="44" y="45" font-size="8" font-family="Open Sans, sans-serif" fill="#63666a">Agent draft</text>
+            <polygon points="128,41 140,48 128,55" fill="rgba(16,118,168,0.2)" stroke="#1076A8"/>
+            <text x="148" y="45" font-size="8" font-family="Open Sans, sans-serif" fill="#63666a">Human gate ◇</text>
+            <rect x="218" y="34" width="14" height="14" rx="2" fill="#000"/>
+            <text x="238" y="45" font-size="8" font-family="Open Sans, sans-serif" fill="#63666a">Workflow execute</text>
+            <rect x="338" y="34" width="14" height="14" rx="2" fill="rgba(0,0,0,0.04)" stroke="#75787b"/>
+            <text x="358" y="45" font-size="8" font-family="Open Sans, sans-serif" fill="#63666a">Documentation</text>
+
+            <!-- Orchestrator — spans columns 2–3 -->
+            <rect x="256" y="56" width="432" height="38" rx="6" fill="rgba(134,188,37,0.1)" stroke="#86BC25" stroke-width="1.5"/>
+            <text x="472" y="72" text-anchor="middle" font-size="8" fill="#86BC25" font-family="Geist Mono, monospace" letter-spacing="0.1em">ORCHESTRATOR</text>
+            <text x="472" y="84" text-anchor="middle" font-size="10" font-weight="600" font-family="Open Sans, sans-serif">infra-delivery-orchestrator</text>
+            <line x1="472" y1="94" x2="114" y2="112" stroke="#86BC25" stroke-width="1.2" marker-end="url(#gate-arr-g)"/>
+
+            <!-- ===== ROW 1: stages 1–4 (equal columns) ===== -->
+            <!-- Col layout: stage x=20,244,468,692  w=188  gate cx=226,450,674,898 -->
+
+            <!-- Stage 1 -->
+            <g font-family="Open Sans, sans-serif">
+              <rect x="20" y="112" width="188" height="78" rx="6" fill="rgba(134,188,37,0.15)" stroke="#86BC25"/>
+              <circle cx="38" cy="128" r="11" fill="#86BC25"/>
+              <text x="38" y="132" text-anchor="middle" font-size="10" font-weight="700" fill="#000" font-family="Geist Mono, monospace">1</text>
+              <text x="114" y="130" text-anchor="middle" font-size="10" font-weight="600">Requirements</text>
+              <text x="114" y="146" text-anchor="middle" font-size="7.5" fill="#63666a">requirements-analyst</text>
+              <text x="114" y="160" text-anchor="middle" font-size="7.5" fill="#63666a">→ requirements doc</text>
+              <line x1="208" y1="151" x2="218" y2="151" stroke="#63666a" marker-end="url(#gate-arr)"/>
+              <polygon points="226,151 238,139 250,151 238,163" fill="rgba(16,118,168,0.15)" stroke="#1076A8"/>
+              <text x="238" y="198" text-anchor="middle" font-size="7" fill="#1076A8">Product lead</text>
+
+              <!-- Stage 2 -->
+              <rect x="256" y="112" width="188" height="78" rx="6" fill="rgba(134,188,37,0.13)" stroke="#86BC25"/>
+              <circle cx="274" cy="128" r="11" fill="#86BC25"/>
+              <text x="274" y="132" text-anchor="middle" font-size="10" font-weight="700" fill="#000" font-family="Geist Mono, monospace">2</text>
+              <text x="350" y="130" text-anchor="middle" font-size="10" font-weight="600">Architecture</text>
+              <text x="350" y="146" text-anchor="middle" font-size="7.5" fill="#63666a">architecture-designer</text>
+              <text x="350" y="160" text-anchor="middle" font-size="7.5" fill="#63666a">→ HLD + diagram</text>
+              <line x1="444" y1="151" x2="454" y2="151" stroke="#63666a" marker-end="url(#gate-arr)"/>
+              <polygon points="462,151 474,139 486,151 474,163" fill="rgba(16,118,168,0.15)" stroke="#1076A8"/>
+              <text x="474" y="198" text-anchor="middle" font-size="7" fill="#1076A8">Cloud architect</text>
+
+              <!-- Stage 3 -->
+              <rect x="492" y="112" width="188" height="78" rx="6" fill="rgba(134,188,37,0.11)" stroke="#86BC25"/>
+              <circle cx="510" cy="128" r="11" fill="#86BC25"/>
+              <text x="510" y="132" text-anchor="middle" font-size="10" font-weight="700" fill="#000" font-family="Geist Mono, monospace">3</text>
+              <text x="586" y="130" text-anchor="middle" font-size="10" font-weight="600">Design</text>
+              <text x="586" y="146" text-anchor="middle" font-size="7.5" fill="#63666a">solution-designer</text>
+              <text x="586" y="160" text-anchor="middle" font-size="7.5" fill="#63666a">→ detailed design</text>
+              <line x1="680" y1="151" x2="690" y2="151" stroke="#63666a" marker-end="url(#gate-arr)"/>
+              <polygon points="698,151 710,139 722,151 710,163" fill="rgba(16,118,168,0.15)" stroke="#1076A8"/>
+              <text x="710" y="198" text-anchor="middle" font-size="7" fill="#1076A8">Solution architect</text>
+              <line x1="722" y1="151" x2="728" y2="151" stroke="#63666a" marker-end="url(#gate-arr)"/>
+
+              <!-- Stage 4 -->
+              <rect x="728" y="112" width="188" height="78" rx="6" fill="rgba(16,118,168,0.12)" stroke="#1076A8"/>
+              <circle cx="746" cy="128" r="11" fill="#1076A8"/>
+              <text x="746" y="132" text-anchor="middle" font-size="10" font-weight="700" fill="#fff" font-family="Geist Mono, monospace">4</text>
+              <text x="822" y="130" text-anchor="middle" font-size="10" font-weight="600">Governance</text>
+              <text x="822" y="146" text-anchor="middle" font-size="7.5" fill="#63666a">governance-reviewer</text>
+              <text x="822" y="160" text-anchor="middle" font-size="7.5" fill="#63666a">guardrails · policies · risk</text>
+              <text x="822" y="198" text-anchor="middle" font-size="7" fill="#1076A8">Security + AI Platform</text>
+            </g>
+
+            <!-- Row 1 → Row 2 connector (right side, below stage 4) -->
+            <line x1="916" y1="190" x2="916" y2="218" stroke="#63666a"/>
+            <line x1="916" y1="218" x2="114" y2="218" stroke="#63666a"/>
+            <line x1="114" y1="218" x2="114" y2="238" stroke="#63666a" marker-end="url(#gate-arr)"/>
+
+            <!-- ===== ROW 2: stages 5–8 ===== -->
+            <g font-family="Open Sans, sans-serif">
+              <!-- Stage 5 -->
+              <rect x="20" y="242" width="188" height="78" rx="6" fill="rgba(16,118,168,0.1)" stroke="#1076A8"/>
+              <circle cx="38" cy="258" r="11" fill="#1076A8"/>
+              <text x="38" y="262" text-anchor="middle" font-size="10" font-weight="700" fill="#fff" font-family="Geist Mono, monospace">5</text>
+              <text x="114" y="260" text-anchor="middle" font-size="10" font-weight="600">IaC plan</text>
+              <text x="114" y="276" text-anchor="middle" font-size="7.5" fill="#63666a">iac-planner</text>
+              <text x="114" y="290" text-anchor="middle" font-size="7.5" fill="#63666a">→ terraform plan summary</text>
+              <line x1="208" y1="281" x2="218" y2="281" stroke="#63666a" marker-end="url(#gate-arr)"/>
+              <polygon points="226,281 238,269 250,281 238,293" fill="rgba(16,118,168,0.15)" stroke="#1076A8"/>
+              <text x="238" y="328" text-anchor="middle" font-size="7" fill="#1076A8">Platform engineer</text>
+
+              <!-- Stage 6 -->
+              <rect x="256" y="242" width="188" height="78" rx="6" fill="rgba(16,118,168,0.08)" stroke="#1076A8"/>
+              <circle cx="274" cy="258" r="11" fill="#1076A8"/>
+              <text x="274" y="262" text-anchor="middle" font-size="10" font-weight="700" fill="#fff" font-family="Geist Mono, monospace">6</text>
+              <text x="350" y="260" text-anchor="middle" font-size="10" font-weight="600">IaC code</text>
+              <text x="350" y="276" text-anchor="middle" font-size="7.5" fill="#63666a">iac-developer</text>
+              <text x="350" y="290" text-anchor="middle" font-size="7.5" fill="#63666a">→ PR (no apply)</text>
+              <line x1="444" y1="281" x2="454" y2="281" stroke="#63666a" marker-end="url(#gate-arr)"/>
+              <polygon points="462,281 474,269 486,281 474,293" fill="rgba(16,118,168,0.15)" stroke="#1076A8"/>
+              <text x="474" y="328" text-anchor="middle" font-size="7" fill="#1076A8">CODEOWNERS review</text>
+
+              <!-- Stage 7 Deploy -->
+              <rect x="492" y="242" width="188" height="78" rx="6" fill="#000" stroke="#86BC25" stroke-width="1.2"/>
+              <circle cx="510" cy="258" r="11" fill="#86BC25"/>
+              <text x="510" y="262" text-anchor="middle" font-size="10" font-weight="700" fill="#000" font-family="Geist Mono, monospace">7</text>
+              <text x="586" y="260" text-anchor="middle" font-size="10" font-weight="600" fill="#86BC25">Deploy</text>
+              <text x="586" y="274" text-anchor="middle" font-size="7" fill="#d0d0ce">deployment-coordinator</text>
+              <text x="586" y="286" text-anchor="middle" font-size="7" fill="#d0d0ce">Actions · OIDC · no agent apply</text>
+              <text x="586" y="298" text-anchor="middle" font-size="7" fill="#86BC25" font-style="italic">+ ServiceNow change</text>
+              <line x1="680" y1="281" x2="690" y2="281" stroke="#63666a" marker-end="url(#gate-arr)"/>
+              <polygon points="698,281 710,269 722,281 710,293" fill="rgba(16,118,168,0.2)" stroke="#1076A8"/>
+              <text x="710" y="328" text-anchor="middle" font-size="7" fill="#1076A8">Env approvers</text>
+
+              <!-- Stage 8 Docs -->
+              <rect x="728" y="242" width="188" height="78" rx="6" fill="rgba(0,0,0,0.04)" stroke="#75787b"/>
+              <circle cx="746" cy="258" r="11" fill="#75787b"/>
+              <text x="746" y="262" text-anchor="middle" font-size="10" font-weight="700" fill="#fff" font-family="Geist Mono, monospace">8</text>
+              <text x="822" y="260" text-anchor="middle" font-size="10" font-weight="600">Documentation</text>
+              <text x="822" y="276" text-anchor="middle" font-size="7.5" fill="#63666a">documentation-author</text>
+              <text x="822" y="290" text-anchor="middle" font-size="7.5" fill="#63666a">→ runbooks · as-built</text>
+              <text x="822" y="328" text-anchor="middle" font-size="7" fill="#1076A8">Service owner sign-off</text>
+            </g>
+
+            <!-- Accountability footer -->
+            <rect x="20" y="360" width="896" height="40" rx="6" fill="rgba(134,188,37,0.06)" stroke="#86BC25" stroke-width="0.8"/>
+            <text x="468" y="378" text-anchor="middle" font-size="9" font-family="Open Sans, sans-serif">Agents propose at each stage</text>
+            <text x="468" y="392" text-anchor="middle" font-size="9" font-family="Open Sans, sans-serif" font-style="italic">◇ Human gate before next stage · Deploy only via GitHub Actions workflow</text>
+          </svg>
+          <p class="chart-caption">Figure 1 — agentic-infra-ops: 4×2 aligned grid, numbered stages, subagents, outputs, and gate approvers</p>
+        </div>
+      </div>
+
+      <div class="plugin-card primary">
+        <div class="tag">Plugin 2</div>
+        <h3>documentation-writer</h3>
+        <p class="desc">Deloitte-style documentation from codebase and remote workspace analysis.</p>
+        <ul>
+          <li>Agent: <code>documentation-author</code></li>
+          <li>Skills: analyze-codebase, write-deloitte-doc, document-api, remote-workspace-scan</li>
+          <li>README, ADRs, runbooks, handover packs</li>
+        </ul>
+      </div>
+
+      <div class="plugin-card primary">
+        <div class="tag">Plugin 3</div>
+        <h3>diagram-design</h3>
+        <p class="desc">40+ diagram types in Deloitte branded style as HTML/SVG/PNG.</p>
+        <ul>
+          <li>Agent: <code>diagram-designer</code></li>
+          <li>Architecture, data-flow, sequence, Wardley, Gantt, sankey, …</li>
+          <li>Deloitte brand tokens + templates</li>
+        </ul>
+      </div>
+
+      <div class="plugin-card primary">
+        <div class="tag">Plugin 4</div>
+        <h3>presentation-design</h3>
+        <p class="desc">Deloitte branded presentations and client slide decks.</p>
+        <ul>
+          <li>Agent: <code>presentation-designer</code></li>
+          <li>Skills: build-slide-deck, apply-brand-tokens, embed-diagrams</li>
+          <li>16:9 / 4:3 layouts</li>
+        </ul>
+      </div>
+
+      <div class="plugin-card primary">
+        <div class="tag">Plugin 5</div>
+        <h3>servicenow-ops</h3>
+        <p class="desc">ServiceNow change requests, incident drafts, and ITSM intake.</p>
+        <ul>
+          <li>Agents: change-request, incident-assistant, itsm-intake</li>
+          <li>Skills: create-change-request, draft-change-plan, link-change-to-pr</li>
+          <li>MCP: servicenow-create/read (Phase 3) · integrates with deploy gate</li>
+        </ul>
+      </div>
+
+    </div>
+  </section>
+
+  <section>
+    <h2>Approved external plugins</h2>
+    <p>Third-party plugins are listed only after <strong>Deloitte compliance review</strong> (license, security, data handling, maintenance). Prefer org-owned mirrors under <code>Deloitte-Netherlands</code>.</p>
+    <table>
+      <thead><tr><th>Criterion</th><th>Requirement</th></tr></thead>
+      <tbody>
+        <tr><td>License</td><td>Compatible with organizational use</td></tr>
+        <tr><td>Security</td><td>Scripts and MCP reviewed; no malicious patterns</td></tr>
+        <tr><td>Data</td><td>No unauthorized exfiltration of client or restricted data</td></tr>
+        <tr><td>Audit</td><td>Record in <code>catalog/external/*.yaml</code> with reviewer and date</td></tr>
+      </tbody>
+    </table>
+    <p>Team members install external plugins <strong>only</strong> from <code>nl-its-cloud-ai-marketplace</code> — not from public marketplaces directly.</p>
+  </section>
+
+  <section>
+    <h2>Future — organization-level custom agents</h2>
+    <p class="lead">Cross-cutting agents (IT Intake, Daily Operations, Guardian) are tested privately until they meet Deloitte standards, then published org-wide for every member.</p>
+    <div class="chart-wrap">
+      <svg viewBox="0 0 920 460" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Organization custom agent graduation workflow">
+        <defs>
+          <marker id="org-arr" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto"><polygon points="0 0,8 3,0 6" fill="#63666a"/></marker>
+          <marker id="org-arr-g" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto"><polygon points="0 0,8 3,0 6" fill="#86BC25"/></marker>
+        </defs>
+        <rect width="100%" height="100%" fill="#ffffff"/>
+        <text x="24" y="22" fill="#75787b" font-size="9" font-family="Geist Mono, monospace" letter-spacing="0.12em">ORG-LEVEL CUSTOM AGENT — GRADUATION WORKFLOW</text>
+
+        <!-- Private swimlane -->
+        <rect x="24" y="36" width="872" height="148" rx="6" fill="rgba(16,118,168,0.04)" stroke="#1076A8" stroke-dasharray="4,3"/>
+        <text x="36" y="52" font-size="8" fill="#1076A8" font-family="Geist Mono, monospace" letter-spacing="0.1em">PRIVATE — .github-private collaborators only</text>
+
+        <!-- Org-wide swimlane -->
+        <rect x="24" y="248" width="872" height="168" rx="6" fill="rgba(134,188,37,0.04)" stroke="#86BC25" stroke-dasharray="4,3"/>
+        <text x="36" y="264" font-size="8" fill="#86BC25" font-family="Geist Mono, monospace" letter-spacing="0.1em">ORG-WIDE — all Deloitte-Netherlands members</text>
+
+        <!-- ===== PRIVATE LANE: steps 1–3 horizontal ===== -->
+        <g font-family="Open Sans, sans-serif">
+          <!-- Step 1 box -->
+          <rect x="48" y="72" width="200" height="72" rx="6" fill="#fff" stroke="#86BC25" stroke-width="1.2"/>
+          <circle cx="48" cy="108" r="14" fill="#86BC25"/>
+          <text x="48" y="112" text-anchor="middle" font-size="11" font-weight="700" fill="#000" font-family="Geist Mono, monospace">1</text>
+          <text x="158" y="96" text-anchor="middle" font-size="10" font-weight="600">Draft agent profile</text>
+          <text x="158" y="112" text-anchor="middle" font-size="8" fill="#63666a">In marketplace plugin or branch</text>
+          <text x="158" y="126" text-anchor="middle" font-size="8" fill="#63666a">Owner: agent owner</text>
+
+          <line x1="248" y1="108" x2="278" y2="108" stroke="#63666a" marker-end="url(#org-arr)"/>
+
+          <!-- Step 2 box -->
+          <rect x="278" y="72" width="220" height="72" rx="6" fill="rgba(16,118,168,0.1)" stroke="#1076A8"/>
+          <circle cx="278" cy="108" r="14" fill="#1076A8"/>
+          <text x="278" y="112" text-anchor="middle" font-size="11" font-weight="700" fill="#fff" font-family="Geist Mono, monospace">2</text>
+          <text x="398" y="96" text-anchor="middle" font-size="10" font-weight="600">Private test</text>
+          <text x="398" y="112" text-anchor="middle" font-size="7.5" fill="#63666a" font-family="Geist Mono, monospace">.github-private/.github/agents/</text>
+          <text x="398" y="126" text-anchor="middle" font-size="8" fill="#63666a">Pilot squad · iterate on instructions</text>
+
+          <line x1="498" y1="108" x2="528" y2="108" stroke="#63666a" marker-end="url(#org-arr)"/>
+
+          <!-- Step 3 box -->
+          <rect x="528" y="72" width="220" height="72" rx="6" fill="rgba(16,118,168,0.08)" stroke="#1076A8"/>
+          <circle cx="528" cy="108" r="14" fill="#1076A8"/>
+          <text x="528" y="112" text-anchor="middle" font-size="11" font-weight="700" fill="#fff" font-family="Geist Mono, monospace">3</text>
+          <text x="648" y="96" text-anchor="middle" font-size="10" font-weight="600">Eval + security review</text>
+          <text x="648" y="112" text-anchor="middle" font-size="8" fill="#63666a">Golden cases · permission boundaries</text>
+          <text x="648" y="126" text-anchor="middle" font-size="8" fill="#63666a">Risk tier · MCP · data classification</text>
+        </g>
+
+        <!-- Arrow down to decision -->
+        <line x1="648" y1="144" x2="648" y2="168" stroke="#63666a" marker-end="url(#org-arr)"/>
+
+        <!-- Decision diamond -->
+        <polygon points="648,178 718,218 648,258 578,218" fill="rgba(16,118,168,0.12)" stroke="#1076A8" stroke-width="1.2"/>
+        <text x="648" y="214" text-anchor="middle" font-size="9" font-weight="600" font-family="Open Sans, sans-serif">Meets Deloitte</text>
+        <text x="648" y="226" text-anchor="middle" font-size="9" font-weight="600" font-family="Open Sans, sans-serif">standards?</text>
+
+        <!-- No loop back (above private lane) -->
+        <path d="M 578 218 L 398 218 L 398 144" fill="none" stroke="#75787b" stroke-width="1" stroke-dasharray="5,4" marker-end="url(#org-arr)"/>
+        <text x="488" y="210" text-anchor="middle" font-size="8" fill="#75787b" font-family="Open Sans, sans-serif" font-style="italic">No — revise and re-test</text>
+
+        <!-- Yes arrow down -->
+        <line x1="648" y1="258" x2="648" y2="278" stroke="#86BC25" stroke-width="1.4" marker-end="url(#org-arr-g)"/>
+        <text x="664" y="272" font-size="8" fill="#86BC25" font-family="Geist Mono, monospace">Yes</text>
+
+        <!-- ===== ORG LANE: steps 4–6 horizontal ===== -->
+        <g font-family="Open Sans, sans-serif">
+          <!-- Step 4 -->
+          <rect x="48" y="288" width="220" height="72" rx="6" fill="rgba(134,188,37,0.12)" stroke="#86BC25"/>
+          <circle cx="48" cy="324" r="14" fill="#86BC25"/>
+          <text x="48" y="328" text-anchor="middle" font-size="11" font-weight="700" fill="#000" font-family="Geist Mono, monospace">4</text>
+          <text x="168" y="312" text-anchor="middle" font-size="10" font-weight="600">Agentic CoE approval</text>
+          <text x="168" y="328" text-anchor="middle" font-size="8" fill="#63666a">RoA hypothesis · production path</text>
+          <text x="168" y="342" text-anchor="middle" font-size="8" fill="#63666a">Owner: AI Platform Owner</text>
+
+          <line x1="268" y1="324" x2="298" y2="324" stroke="#86BC25" stroke-width="1.2" marker-end="url(#org-arr-g)"/>
+
+          <!-- Step 5 -->
+          <rect x="298" y="288" width="240" height="72" rx="6" fill="#000" stroke="#86BC25" stroke-width="1.2"/>
+          <circle cx="298" cy="324" r="14" fill="#86BC25"/>
+          <text x="298" y="328" text-anchor="middle" font-size="11" font-weight="700" fill="#000" font-family="Geist Mono, monospace">5</text>
+          <text x="428" y="312" text-anchor="middle" font-size="10" font-weight="600" fill="#86BC25">Org-wide release</text>
+          <text x="428" y="326" text-anchor="middle" font-size="7.5" fill="#d0d0ce" font-family="Geist Mono, monospace">.github-private/agents/ (org /agents)</text>
+          <text x="428" y="340" text-anchor="middle" font-size="8" fill="#d0d0ce">Available to every org member in VS Code</text>
+
+          <line x1="538" y1="324" x2="568" y2="324" stroke="#63666a" marker-end="url(#org-arr)"/>
+
+          <!-- Step 6 -->
+          <rect x="568" y="288" width="220" height="72" rx="6" fill="rgba(0,0,0,0.03)" stroke="#75787b"/>
+          <circle cx="568" cy="324" r="14" fill="#75787b"/>
+          <text x="568" y="328" text-anchor="middle" font-size="11" font-weight="700" fill="#fff" font-family="Geist Mono, monospace">6</text>
+          <text x="688" y="312" text-anchor="middle" font-size="10" font-weight="600">Maintain + recertify</text>
+          <text x="688" y="328" text-anchor="middle" font-size="8" fill="#63666a">Quarterly eval regression</text>
+          <text x="688" y="342" text-anchor="middle" font-size="8" fill="#63666a">Optional: extract to marketplace plugin</text>
+        </g>
+
+        <!-- Optional path (dashed, below step 6) -->
+        <line x1="688" y1="360" x2="688" y2="378" stroke="#75787b" stroke-dasharray="4,3" marker-end="url(#org-arr)"/>
+        <rect x="568" y="378" width="240" height="32" rx="6" fill="rgba(0,0,0,0.02)" stroke="#75787b" stroke-dasharray="4,3"/>
+        <text x="688" y="398" text-anchor="middle" font-size="8" fill="#63666a" font-family="Open Sans, sans-serif">Keep as org agent · or bundle into nl-its-cloud-ai-marketplace</text>
+
+        <!-- Timeline footer -->
+        <rect x="24" y="428" width="872" height="24" rx="4" fill="rgba(134,188,37,0.06)"/>
+        <text x="460" y="444" text-anchor="middle" font-size="8" font-family="Open Sans, sans-serif" fill="#63666a">Phase 2: private testing · Phase 3: first graduation · Phase 4+: Guardian + orchestration agents</text>
+      </svg>
+      <p class="chart-caption">Figure 2 — Numbered steps left of each box; decision loop returns to private test; org release after CoE approval</p>
+    </div>
+  </section>
+
+  <section>
+    <h2>Marketplace roadmap — phases</h2>
+    <p class="lead">18-month marketplace maturity aligned to the IT Cloud Team roadmap. Each phase adds capability while governance matures first.</p>
+    <div class="chart-wrap">
+      <svg viewBox="0 0 920 340" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Marketplace phase Gantt chart">
+        <rect width="100%" height="100%" fill="#ffffff"/>
+        <text x="24" y="22" fill="#75787b" font-size="9" font-family="Geist Mono, monospace" letter-spacing="0.12em">MARKETPLACE GANTT — 18 MONTHS FROM SEP 2026</text>
+
+        <!-- Time axis -->
+        <line x1="140" y1="48" x2="880" y2="48" stroke="#bbbcbc" stroke-width="1"/>
+        <text x="140" y="42" font-size="7" fill="#75787b" font-family="Geist Mono, monospace">Sep '26</text>
+        <text x="260" y="42" font-size="7" fill="#75787b" font-family="Geist Mono, monospace">Nov</text>
+        <text x="380" y="42" font-size="7" fill="#75787b" font-family="Geist Mono, monospace">Jan '27</text>
+        <text x="500" y="42" font-size="7" fill="#75787b" font-family="Geist Mono, monospace">Mar</text>
+        <text x="620" y="42" font-size="7" fill="#75787b" font-family="Geist Mono, monospace">May</text>
+        <text x="740" y="42" font-size="7" fill="#75787b" font-family="Geist Mono, monospace">Sep '27</text>
+        <text x="860" y="42" font-size="7" fill="#75787b" font-family="Geist Mono, monospace">Feb '28</text>
+
+        <!-- Grid lines -->
+        <line x1="260" y1="48" x2="260" y2="300" stroke="rgba(0,0,0,0.06)"/>
+        <line x1="380" y1="48" x2="380" y2="300" stroke="rgba(0,0,0,0.06)"/>
+        <line x1="500" y1="48" x2="500" y2="300" stroke="rgba(0,0,0,0.06)"/>
+        <line x1="620" y1="48" x2="620" y2="300" stroke="rgba(0,0,0,0.06)"/>
+        <line x1="740" y1="48" x2="740" y2="300" stroke="rgba(0,0,0,0.06)"/>
+
+        <!-- Phase bars: scale 740px = 18 months, ~41px per month, start Sep 2026 -->
+        <!-- P1: wk 1-4 = ~1 month: 140-181 -->
+        <text x="24" y="72" font-size="9" font-weight="600" font-family="Open Sans, sans-serif">Phase 1</text>
+        <text x="24" y="84" font-size="7" fill="#63666a" font-family="Open Sans, sans-serif">Wk 1–4</text>
+        <rect x="140" y="62" width="41" height="22" rx="3" fill="#86BC25"/>
+        <text x="185" y="76" font-size="7" fill="#63666a" font-family="Open Sans, sans-serif">5 plugins · onboarding · external review</text>
+
+        <!-- P2: wk 5-8 -->
+        <text x="24" y="108" font-size="9" font-weight="600" font-family="Open Sans, sans-serif">Phase 2</text>
+        <text x="24" y="120" font-size="7" fill="#63666a" font-family="Open Sans, sans-serif">Wk 5–8</text>
+        <rect x="181" y="98" width="41" height="22" rx="3" fill="#86BC25" opacity="0.85"/>
+        <text x="230" y="112" font-size="7" fill="#63666a" font-family="Open Sans, sans-serif">CI · catalog · CODEOWNERS · private org agent test</text>
+
+        <!-- P3: wk 9-16 = 2 months -->
+        <text x="24" y="144" font-size="9" font-weight="600" font-family="Open Sans, sans-serif">Phase 3</text>
+        <text x="24" y="156" font-size="7" fill="#63666a" font-family="Open Sans, sans-serif">Wk 9–16</text>
+        <rect x="222" y="134" width="82" height="22" rx="3" fill="#1076A8"/>
+        <text x="312" y="148" font-size="7" fill="#63666a" font-family="Open Sans, sans-serif">Execute skills · read-only MCP · 1st org agent graduation</text>
+
+        <!-- P4: mo 5-8 = 4 months from month 5 = start ~month 5 from Sep = Jan 2027, x=140+4*41=304 -->
+        <text x="24" y="180" font-size="9" font-weight="600" font-family="Open Sans, sans-serif">Phase 4</text>
+        <text x="24" y="192" font-size="7" fill="#63666a" font-family="Open Sans, sans-serif">Mo 5–8</text>
+        <rect x="304" y="170" width="164" height="22" rx="3" fill="#1076A8" opacity="0.85"/>
+        <text x="476" y="184" font-size="7" fill="#63666a" font-family="Open Sans, sans-serif">Infra gate automation · guardian hooks · ServiceNow read</text>
+
+        <!-- P5: mo 9-12 -->
+        <text x="24" y="216" font-size="9" font-weight="600" font-family="Open Sans, sans-serif">Phase 5</text>
+        <text x="24" y="228" font-size="7" fill="#63666a" font-family="Open Sans, sans-serif">Mo 9–12</text>
+        <rect x="468" y="206" width="164" height="22" rx="3" fill="#046A38"/>
+        <text x="640" y="220" font-size="7" fill="#63666a" font-family="Open Sans, sans-serif">Deploy workflow hand-off · MCP gateway · vector docs</text>
+
+        <!-- P6: mo 13-18 -->
+        <text x="24" y="252" font-size="9" font-weight="600" font-family="Open Sans, sans-serif">Phase 6</text>
+        <text x="24" y="264" font-size="7" fill="#63666a" font-family="Open Sans, sans-serif">Mo 13–18</text>
+        <rect x="632" y="242" width="246" height="22" rx="3" fill="#000"/>
+        <text x="632" y="274" font-size="7" fill="#63666a" font-family="Open Sans, sans-serif">Self-service catalog · multi-plugin workflows · executive RoA dashboard</text>
+
+        <!-- Autonomy ladder row -->
+        <text x="24" y="298" font-size="8" fill="#75787b" font-family="Geist Mono, monospace" letter-spacing="0.08em">AUTONOMY</text>
+        <rect x="140" y="286" width="82" height="14" rx="2" fill="rgba(134,188,37,0.2)" stroke="#86BC25"/>
+        <text x="181" y="296" text-anchor="middle" font-size="7" font-family="Open Sans, sans-serif">Assist → Suggest</text>
+        <rect x="222" y="286" width="82" height="14" rx="2" fill="rgba(16,118,168,0.15)" stroke="#1076A8"/>
+        <text x="263" y="296" text-anchor="middle" font-size="7" font-family="Open Sans, sans-serif">Suggest → Execute</text>
+        <rect x="304" y="286" width="328" height="14" rx="2" fill="rgba(16,118,168,0.1)" stroke="#1076A8"/>
+        <text x="468" y="296" text-anchor="middle" font-size="7" font-family="Open Sans, sans-serif">Execute → Orchestrate</text>
+        <rect x="632" y="286" width="246" height="14" rx="2" fill="rgba(0,0,0,0.08)" stroke="#86BC25"/>
+        <text x="755" y="296" text-anchor="middle" font-size="7" fill="#86BC25" font-family="Open Sans, sans-serif">Optimize</text>
+
+        <text x="460" y="328" text-anchor="middle" font-size="8" fill="#63666a" font-family="Open Sans, sans-serif" font-style="italic">Governance and marketplace foundation in Phases 1–2 before Execute and Orchestrate capabilities scale</text>
+      </svg>
+      <p class="chart-caption">Figure 3 — Marketplace phase Gantt (18 months) with autonomy ladder overlay</p>
+    </div>
+    <table>
+      <thead><tr><th>Phase</th><th>Timing</th><th>Key marketplace deliverables</th></tr></thead>
+      <tbody>
+        <tr><td><strong>1</strong></td><td>Weeks 1–4</td><td>Create marketplace; 5 internal plugins (draft); team onboarding; external plugin review process</td></tr>
+        <tr><td><strong>2</strong></td><td>Weeks 5–8</td><td>CI validation; catalog metadata; CODEOWNERS; private org agent testing</td></tr>
+        <tr><td><strong>3</strong></td><td>Weeks 9–16</td><td>Execute skills; read-only MCP; first org agent graduation</td></tr>
+        <tr><td><strong>4</strong></td><td>Months 5–8</td><td>Infra gate automation; guardian hooks; ServiceNow read integration</td></tr>
+        <tr><td><strong>5</strong></td><td>Months 9–12</td><td>Deploy workflow hand-off; MCP gateway; vector-indexed documentation</td></tr>
+        <tr><td><strong>6</strong></td><td>Months 13–18</td><td>Self-service catalog; multi-plugin workflows; executive RoA dashboard</td></tr>
+      </tbody>
+    </table>
+  </section>
+
+  <section>
+    <h2>Team member setup — VS Code</h2>
+    <ol class="steps">
+      <li>Register marketplace: <code>/plugin marketplace add Deloitte-Netherlands/nl-its-cloud-ai-marketplace</code></li>
+      <li>Install per project, e.g.:<br><code>/plugin install agentic-infra-ops@nl-its-cloud-ai-marketplace</code><br><code>/plugin install servicenow-ops@nl-its-cloud-ai-marketplace</code></li>
+      <li>Verify agents in Copilot Chat agent picker.</li>
+      <li>Update after merges: <code>/plugin marketplace update nl-its-cloud-ai-marketplace</code></li>
+    </ol>
+  </section>
+
+  <section>
+    <h2>Project adoption</h2>
+    <table>
+      <thead><tr><th>Project type</th><th>Required plugins</th></tr></thead>
+      <tbody>
+        <tr><td>IaC / platform repo</td><td><code>agentic-infra-ops</code>, <code>servicenow-ops</code></td></tr>
+        <tr><td>Application repo</td><td><code>documentation-writer</code></td></tr>
+        <tr><td>Architecture / design</td><td><code>diagram-design</code></td></tr>
+        <tr><td>Client deliverable</td><td><code>presentation-design</code>, <code>diagram-design</code></td></tr>
+      </tbody>
+    </table>
+  </section>
+
+  <section>
+    <h2>Accountability line</h2>
+    <p>Plugin agents and subagents <strong>propose</strong> drafts at each gate. Skills teach specialized tasks. GitHub Actions <strong>execute</strong> deploy (Tier 3+). Humans <strong>approve</strong> at every stage. ServiceNow change may be required before deploy.</p>
+  </section>
+
+  <section>
+    <h2>Workshop series</h2>
+    <p class="lead">Four enablement workshops to onboard the IT Cloud team on the agentic stack, VS Code setup, skills authoring, and roadmap next steps.</p>
+
+    <div class="chart-wrap">
+      <svg viewBox="0 0 920 200" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Evolution from LLM to full agentic setup">
+        <defs>
+          <marker id="evo-arr" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto"><polygon points="0 0,8 3,0 6" fill="#63666a"/></marker>
+        </defs>
+        <rect width="100%" height="100%" fill="#ffffff"/>
+        <text x="24" y="22" fill="#75787b" font-size="9" font-family="Geist Mono, monospace" letter-spacing="0.12em">WORKSHOP 1 — EVOLUTION: LLM → FULL AGENTIC SETUP (GitHub Copilot harness)</text>
+
+        <!-- Evolution steps -->
+        <g font-family="Open Sans, sans-serif">
+          <rect x="24" y="44" width="100" height="48" rx="6" fill="rgba(0,0,0,0.04)" stroke="#75787b"/>
+          <text x="74" y="64" text-anchor="middle" font-size="9" font-weight="600">LLM</text>
+          <text x="74" y="78" text-anchor="middle" font-size="7" fill="#63666a">Base model</text>
+          <text x="130" y="72" font-size="12" fill="#63666a">→</text>
+
+          <rect x="138" y="44" width="100" height="48" rx="6" fill="rgba(0,0,0,0.05)" stroke="#75787b"/>
+          <text x="188" y="64" text-anchor="middle" font-size="9" font-weight="600">Chat</text>
+          <text x="188" y="78" text-anchor="middle" font-size="7" fill="#63666a">Prompt + reply</text>
+          <text x="246" y="72" font-size="12" fill="#63666a">→</text>
+
+          <rect x="254" y="44" width="100" height="48" rx="6" fill="rgba(134,188,37,0.08)" stroke="#86BC25"/>
+          <text x="304" y="64" text-anchor="middle" font-size="9" font-weight="600">Skills</text>
+          <text x="304" y="78" text-anchor="middle" font-size="7" fill="#63666a">SKILL.md procedures</text>
+          <text x="362" y="72" font-size="12" fill="#63666a">→</text>
+
+          <rect x="370" y="44" width="100" height="48" rx="6" fill="rgba(134,188,37,0.12)" stroke="#86BC25"/>
+          <text x="420" y="64" text-anchor="middle" font-size="9" font-weight="600">Agents</text>
+          <text x="420" y="78" text-anchor="middle" font-size="7" fill="#63666a">Role + tools</text>
+          <text x="478" y="72" font-size="12" fill="#63666a">→</text>
+
+          <rect x="486" y="44" width="100" height="48" rx="6" fill="rgba(16,118,168,0.1)" stroke="#1076A8"/>
+          <text x="536" y="64" text-anchor="middle" font-size="9" font-weight="600">Tools</text>
+          <text x="536" y="78" text-anchor="middle" font-size="7" fill="#63666a">MCP · scripts</text>
+          <text x="594" y="72" font-size="12" fill="#63666a">→</text>
+
+          <rect x="602" y="44" width="110" height="48" rx="6" fill="rgba(16,118,168,0.12)" stroke="#1076A8"/>
+          <text x="657" y="64" text-anchor="middle" font-size="9" font-weight="600">Knowledge</text>
+          <text x="657" y="78" text-anchor="middle" font-size="7" fill="#63666a">Graph / RAG</text>
+          <text x="720" y="72" font-size="12" fill="#63666a">→</text>
+
+          <rect x="728" y="44" width="168" height="48" rx="6" fill="#000" stroke="#86BC25" stroke-width="1.2"/>
+          <text x="812" y="62" text-anchor="middle" font-size="9" font-weight="600" fill="#86BC25">Full agentic harness</text>
+          <text x="812" y="76" text-anchor="middle" font-size="7" fill="#d0d0ce">Copilot + plugins + gates</text>
+        </g>
+
+        <!-- How it fits together -->
+        <rect x="24" y="108" width="872" height="80" rx="6" fill="rgba(134,188,37,0.05)" stroke="#86BC25" stroke-width="0.8"/>
+        <text x="460" y="128" text-anchor="middle" font-size="9" fill="#86BC25" font-family="Geist Mono, monospace" letter-spacing="0.08em">HOW IT WORKS TOGETHER IN THE HARNESS</text>
+        <text x="120" y="152" text-anchor="middle" font-size="8" font-family="Open Sans, sans-serif"><tspan font-weight="600">Harness</tspan> (VS Code + Copilot)</text>
+        <text x="120" y="166" text-anchor="middle" font-size="7" fill="#63666a">Orchestrates sessions</text>
+        <text x="280" y="152" text-anchor="middle" font-size="8" font-family="Open Sans, sans-serif"><tspan font-weight="600">Agent</tspan> selects skills</text>
+        <text x="280" y="166" text-anchor="middle" font-size="7" fill="#63666a">Bounded role + policy</text>
+        <text x="440" y="152" text-anchor="middle" font-size="8" font-family="Open Sans, sans-serif"><tspan font-weight="600">Skills</tspan> teach tasks</text>
+        <text x="440" y="166" text-anchor="middle" font-size="7" fill="#63666a">SKILL.md on demand</text>
+        <text x="600" y="152" text-anchor="middle" font-size="8" font-family="Open Sans, sans-serif"><tspan font-weight="600">Tools</tspan> act</text>
+        <text x="600" y="166" text-anchor="middle" font-size="7" fill="#63666a">MCP · scripts · APIs</text>
+        <text x="760" y="152" text-anchor="middle" font-size="8" font-family="Open Sans, sans-serif"><tspan font-weight="600">LLM + Graph</tspan> reason</text>
+        <text x="760" y="166" text-anchor="middle" font-size="7" fill="#63666a">Model + knowledge context</text>
+        <line x1="180" y1="152" x2="220" y2="152" stroke="#86BC25" marker-end="url(#evo-arr)"/>
+        <line x1="340" y1="152" x2="380" y2="152" stroke="#86BC25" marker-end="url(#evo-arr)"/>
+        <line x1="500" y1="152" x2="540" y2="152" stroke="#86BC25" marker-end="url(#evo-arr)"/>
+        <line x1="660" y1="152" x2="700" y2="152" stroke="#86BC25" marker-end="url(#evo-arr)"/>
+      </svg>
+      <p class="chart-caption">Workshop 1 — Evolution from raw LLM to full agentic setup; harness orchestrates agent, skills, tools, and knowledge</p>
+    </div>
+
+    <table>
+      <thead><tr><th>Workshop</th><th>Topic</th><th>Materials</th></tr></thead>
+      <tbody>
+        <tr>
+          <td><strong>1</strong></td>
+          <td>How everything works together — Harness (GitHub Copilot), Agent, Skills, Tools (MCP, scripts), LLM, Knowledge Graph. Evolution from LLM to full agentic setup.</td>
+          <td><a href="./workshops/workshop-01-agentic-stack.html">Workshop 1 page</a> · <a href="./workshops/workshop-01-agentic-stack.md">Markdown</a></td>
+        </tr>
+        <tr>
+          <td><strong>2</strong></td>
+          <td>VS Code setup with GitHub Copilot · Register and use <code>Deloitte-Netherlands/nl-its-cloud-ai-marketplace</code> · Plugin anatomy and install paths.</td>
+          <td><a href="./workshops/workshop-02-vscode-setup.html">Workshop 2 page</a> · <a href="./workshops/workshop-02-vscode-setup.md">Markdown</a></td>
+        </tr>
+        <tr>
+          <td><strong>3</strong></td>
+          <td>Continue with skills — authoring <code>SKILL.md</code>, testing in plugins, contribution workflow and CODEOWNERS.</td>
+          <td><a href="./workshops/workshop-03-skills.html">Workshop 3 page</a> · <a href="./workshops/workshop-03-skills.md">Markdown</a></td>
+        </tr>
+        <tr>
+          <td><strong>4</strong></td>
+          <td>Brainstorm next steps — pilot repos, org agents, external plugins, Phase 2 priorities.</td>
+          <td>Roadmap §11 · Immediate actions</td>
+        </tr>
+      </tbody>
+    </table>
+  </section>
+
+  <section>
+    <h2>Immediate actions</h2>
+    <p class="lead">Eight deliverables to complete in <strong>Phase 1 — coming month</strong>. Foundation first, then team adoption and governance charter.</p>
+    <div class="chart-wrap">
+      <svg viewBox="0 0 920 320" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Phase 1 immediate actions">
+        <defs>
+          <marker id="act-arr" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto"><polygon points="0 0,8 3,0 6" fill="#86BC25"/></marker>
+        </defs>
+        <rect width="100%" height="100%" fill="#ffffff"/>
+        <text x="24" y="22" fill="#75787b" font-size="9" font-family="Geist Mono, monospace" letter-spacing="0.12em">PHASE 1 — COMING MONTH · IMMEDIATE ACTIONS</text>
+
+        <!-- Row label: Platform -->
+        <text x="24" y="52" font-size="8" fill="#1076A8" font-family="Geist Mono, monospace" letter-spacing="0.1em">PLATFORM SETUP</text>
+        <line x1="24" y1="58" x2="896" y2="58" stroke="rgba(0,0,0,0.08)"/>
+
+        <!-- Row 1: actions 1–4 -->
+        <g font-family="Open Sans, sans-serif">
+          <!-- Action 1 -->
+          <rect x="24" y="68" width="200" height="72" rx="6" fill="rgba(134,188,37,0.12)" stroke="#86BC25"/>
+          <circle cx="24" cy="104" r="14" fill="#86BC25"/>
+          <text x="24" y="108" text-anchor="middle" font-size="11" font-weight="700" fill="#000" font-family="Geist Mono, monospace">1</text>
+          <text x="134" y="92" text-anchor="middle" font-size="10" font-weight="600">Create marketplace</text>
+          <text x="134" y="108" text-anchor="middle" font-size="7.5" fill="#63666a">nl-its-cloud-ai-marketplace</text>
+          <text x="134" y="122" text-anchor="middle" font-size="7.5" fill="#63666a">marketplace.json · catalog · CI</text>
+          <line x1="224" y1="104" x2="244" y2="104" stroke="#86BC25" marker-end="url(#act-arr)"/>
+
+          <!-- Action 2 -->
+          <rect x="244" y="68" width="200" height="72" rx="6" fill="rgba(134,188,37,0.1)" stroke="#86BC25"/>
+          <circle cx="244" cy="104" r="14" fill="#86BC25"/>
+          <text x="244" y="108" text-anchor="middle" font-size="11" font-weight="700" fill="#000" font-family="Geist Mono, monospace">2</text>
+          <text x="354" y="92" text-anchor="middle" font-size="10" font-weight="600">Seed 5 plugins</text>
+          <text x="354" y="108" text-anchor="middle" font-size="7.5" fill="#63666a">infra-ops · docs · diagrams</text>
+          <text x="354" y="122" text-anchor="middle" font-size="7.5" fill="#63666a">presentations · ServiceNow</text>
+          <line x1="444" y1="104" x2="464" y2="104" stroke="#86BC25" marker-end="url(#act-arr)"/>
+
+          <!-- Action 3 -->
+          <rect x="464" y="68" width="200" height="72" rx="6" fill="rgba(16,118,168,0.1)" stroke="#1076A8"/>
+          <circle cx="464" cy="104" r="14" fill="#1076A8"/>
+          <text x="464" y="108" text-anchor="middle" font-size="11" font-weight="700" fill="#fff" font-family="Geist Mono, monospace">3</text>
+          <text x="574" y="92" text-anchor="middle" font-size="10" font-weight="600">Approval-gate workflows</text>
+          <text x="574" y="108" text-anchor="middle" font-size="7.5" fill="#63666a">agentic-it-platform repo</text>
+          <text x="574" y="122" text-anchor="middle" font-size="7.5" fill="#63666a">8-stage infra delivery gates</text>
+          <line x1="664" y1="104" x2="684" y2="104" stroke="#86BC25" marker-end="url(#act-arr)"/>
+
+          <!-- Action 4 -->
+          <rect x="684" y="68" width="200" height="72" rx="6" fill="rgba(16,118,168,0.08)" stroke="#1076A8"/>
+          <circle cx="684" cy="104" r="14" fill="#1076A8"/>
+          <text x="684" y="108" text-anchor="middle" font-size="11" font-weight="700" fill="#fff" font-family="Geist Mono, monospace">4</text>
+          <text x="794" y="92" text-anchor="middle" font-size="10" font-weight="600">Register marketplace</text>
+          <text x="794" y="108" text-anchor="middle" font-size="7.5" fill="#63666a">Org settings → Plugins</text>
+          <text x="794" y="122" text-anchor="middle" font-size="7.5" fill="#63666a">Sync automatically</text>
+        </g>
+
+        <!-- Connector row 1 → row 2 -->
+        <line x1="884" y1="140" x2="884" y2="158" stroke="#63666a"/>
+        <line x1="884" y1="158" x2="24" y2="158" stroke="#63666a"/>
+        <line x1="24" y1="158" x2="24" y2="176" stroke="#63666a" marker-end="url(#act-arr)"/>
+
+        <!-- Row label: Adoption -->
+        <text x="24" y="172" font-size="8" fill="#86BC25" font-family="Geist Mono, monospace" letter-spacing="0.1em">TEAM ADOPTION &amp; GOVERNANCE</text>
+        <line x1="24" y1="178" x2="896" y2="178" stroke="rgba(0,0,0,0.08)"/>
+
+        <!-- Row 2: actions 5–8 -->
+        <g font-family="Open Sans, sans-serif">
+          <!-- Action 5 -->
+          <rect x="24" y="188" width="200" height="72" rx="6" fill="rgba(134,188,37,0.08)" stroke="#86BC25"/>
+          <circle cx="24" cy="224" r="14" fill="#86BC25"/>
+          <text x="24" y="228" text-anchor="middle" font-size="11" font-weight="700" fill="#000" font-family="Geist Mono, monospace">5</text>
+          <text x="134" y="212" text-anchor="middle" font-size="10" font-weight="600">Onboard team</text>
+          <text x="134" y="228" text-anchor="middle" font-size="7.5" fill="#63666a">VS Code marketplace register</text>
+          <text x="134" y="242" text-anchor="middle" font-size="7.5" fill="#63666a">100% cloud team target</text>
+          <line x1="224" y1="224" x2="244" y2="224" stroke="#86BC25" marker-end="url(#act-arr)"/>
+
+          <!-- Action 6 -->
+          <rect x="244" y="188" width="200" height="72" rx="6" fill="rgba(134,188,37,0.06)" stroke="#86BC25"/>
+          <circle cx="244" cy="224" r="14" fill="#86BC25"/>
+          <text x="244" y="228" text-anchor="middle" font-size="11" font-weight="700" fill="#000" font-family="Geist Mono, monospace">6</text>
+          <text x="354" y="212" text-anchor="middle" font-size="10" font-weight="600">Pilot 2 repos</text>
+          <text x="354" y="228" text-anchor="middle" font-size="7.5" fill="#63666a">IaC: infra-ops + ServiceNow</text>
+          <text x="354" y="242" text-anchor="middle" font-size="7.5" fill="#63666a">Deliverable: diagrams + decks</text>
+          <line x1="444" y1="224" x2="464" y2="224" stroke="#86BC25" marker-end="url(#act-arr)"/>
+
+          <!-- Action 7 -->
+          <rect x="464" y="188" width="200" height="72" rx="6" fill="rgba(0,0,0,0.03)" stroke="#75787b"/>
+          <circle cx="464" cy="224" r="14" fill="#75787b"/>
+          <text x="464" y="228" text-anchor="middle" font-size="11" font-weight="700" fill="#fff" font-family="Geist Mono, monospace">7</text>
+          <text x="574" y="212" text-anchor="middle" font-size="10" font-weight="600">External plugin review</text>
+          <text x="574" y="228" text-anchor="middle" font-size="7.5" fill="#63666a">Compliance charter (§6)</text>
+          <text x="574" y="242" text-anchor="middle" font-size="7.5" fill="#63666a">catalog/external/*.yaml</text>
+          <line x1="664" y1="224" x2="684" y2="224" stroke="#86BC25" marker-end="url(#act-arr)"/>
+
+          <!-- Action 8 -->
+          <rect x="684" y="188" width="200" height="72" rx="6" fill="rgba(0,0,0,0.02)" stroke="#75787b" stroke-dasharray="4,3"/>
+          <circle cx="684" cy="224" r="14" fill="#75787b"/>
+          <text x="684" y="228" text-anchor="middle" font-size="11" font-weight="700" fill="#fff" font-family="Geist Mono, monospace">8</text>
+          <text x="794" y="212" text-anchor="middle" font-size="10" font-weight="600">Plan org agent test</text>
+          <text x="794" y="228" text-anchor="middle" font-size="7.5" fill="#63666a">.github-private private test</text>
+          <text x="794" y="242" text-anchor="middle" font-size="7.5" fill="#63666a">Prepares Phase 2 graduation</text>
+        </g>
+
+        <!-- Footer -->
+        <rect x="24" y="278" width="872" height="32" rx="6" fill="#000"/>
+        <text x="460" y="292" text-anchor="middle" font-size="8" fill="#86BC25" font-family="Geist Mono, monospace" letter-spacing="0.08em">EXIT CRITERIA</text>
+        <text x="460" y="304" text-anchor="middle" font-size="8" fill="#d0d0ce" font-family="Open Sans, sans-serif">Marketplace live · 5 plugins · team onboarded · 2 pilot repos · external review chartered</text>
+      </svg>
+      <p class="chart-caption">Figure 4 — Phase 1 immediate actions: platform setup (1–4) then team adoption and governance (5–8)</p>
+    </div>
+    <div class="cta">
+      <h3>Phase 1 — Coming month</h3>
+      <p>Complete actions 1–7 in the coming month. Action 8 prepares the Phase 2 org-agent private test path.</p>
+    </div>
+  </section>
+
+</div>
+
+<footer>
+  <p>Applies the <a href="./it-cloud-team-ai-roadmap.md">IT Cloud Team AI roadmap</a> to <strong>Deloitte-Netherlands</strong> via GitHub Copilot plugins.</p>
+  <p><a href="./nl-its-cloud-copilot-marketplace.md">Full guide (Markdown)</a> · <a href="./workshops/workshop-01-agentic-stack.html">Workshop 1</a> · <a href="./workshops/workshop-02-vscode-setup.html">Workshop 2</a> · <a href="./workshops/workshop-03-skills.html">Workshop 3</a> · <a href="./it-cloud-team-ai-roadmap.html">Roadmap (visual)</a></p>
+</footer>
+
+</body>
+</html>
